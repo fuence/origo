@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="lt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ORIGO — Išrinkti produktai | Selected Products | Wybrane produkty</title>
+<meta name="description" content="Aukštos kokybės produktai jūsų namams. Premium selected products. Produkty premium dla Twojego domu.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink:     #1a1a1a;
+  --cream:   #f5f0e8;
+  --parchm:  #ede7d9;
+  --olive:   #3d5a3e;
+  --olive-l: #5a7c5b;
+  --gold:    #b8860b;
+  --gold-l:  #d4a017;
+  --rust:    #8b3a2a;
+  --warm:    #f9f5ee;
+  --muted:   #6b6560;
+  --border:  #d9d2c4;
+  --white:   #ffffff;
+  --shadow:  0 4px 24px rgba(26,26,26,.08);
+  --shadow-h:0 8px 40px rgba(26,26,26,.15);
+  --r:       6px;
+  --trans:   all .3s cubic-bezier(.4,0,.2,1);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:var(--warm);color:var(--ink);line-height:1.6;font-size:16px}
+
+/* ── LANGUAGE SWITCHER ── */
+.lang-bar{background:var(--olive);padding:6px 0;text-align:center}
+.lang-bar a{color:rgba(255,255,255,.6);text-decoration:none;font-size:12px;letter-spacing:.1em;text-transform:uppercase;margin:0 10px;transition:var(--trans)}
+.lang-bar a.active,.lang-bar a:hover{color:#fff}
+.lang-bar a.active{font-weight:500;text-decoration:underline;text-underline-offset:3px}
+
+/* ── HEADER ── */
+header{background:var(--cream);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100;backdrop-filter:blur(10px)}
+.header-inner{max-width:1200px;margin:0 auto;padding:0 24px;display:flex;align-items:center;justify-content:space-between;height:72px}
+.logo{display:flex;align-items:baseline;gap:8px;text-decoration:none}
+.logo-mark{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:300;letter-spacing:.15em;color:var(--olive);line-height:1}
+.logo-dot{width:6px;height:6px;background:var(--gold);border-radius:50%;margin-bottom:4px}
+.logo-sub{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted)}
+nav{display:flex;gap:32px;align-items:center}
+nav a{text-decoration:none;color:var(--ink);font-size:14px;letter-spacing:.05em;transition:var(--trans);position:relative}
+nav a::after{content:'';position:absolute;bottom:-4px;left:0;width:0;height:1px;background:var(--gold);transition:var(--trans)}
+nav a:hover::after{width:100%}
+nav a:hover{color:var(--olive)}
+.nav-cta{background:var(--olive);color:#fff!important;padding:10px 22px;border-radius:var(--r);font-size:13px;letter-spacing:.08em}
+.nav-cta::after{display:none!important}
+.nav-cta:hover{background:var(--olive-l)!important;color:#fff!important}
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:4px}
+.hamburger span{width:24px;height:2px;background:var(--ink);transition:var(--trans)}
+
+/* ── HERO ── */
+.hero{background:linear-gradient(135deg,var(--olive) 0%,#2a3d2b 100%);padding:100px 24px;text-align:center;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")}
+.hero-content{max-width:700px;margin:0 auto;position:relative}
+.hero-eyebrow{font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:rgba(255,255,255,.5);margin-bottom:20px}
+.hero-title{font-family:'Cormorant Garamond',serif;font-size:clamp(48px,7vw,84px);font-weight:300;color:#fff;line-height:1.05;letter-spacing:-.01em;margin-bottom:10px}
+.hero-title em{font-style:italic;color:var(--gold-l)}
+.hero-subtitle{font-size:15px;color:rgba(255,255,255,.65);max-width:500px;margin:24px auto 40px;line-height:1.7}
+.hero-actions{display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
+.btn{display:inline-block;text-decoration:none;padding:14px 32px;border-radius:var(--r);font-size:13px;letter-spacing:.1em;text-transform:uppercase;font-weight:500;transition:var(--trans);cursor:pointer;border:none}
+.btn-primary{background:var(--gold);color:var(--ink)}
+.btn-primary:hover{background:var(--gold-l);transform:translateY(-2px);box-shadow:0 8px 24px rgba(184,134,11,.3)}
+.btn-outline{background:transparent;color:#fff;border:1px solid rgba(255,255,255,.4)}
+.btn-outline:hover{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.7)}
+.hero-badges{display:flex;gap:24px;justify-content:center;margin-top:48px;flex-wrap:wrap}
+.badge{display:flex;align-items:center;gap:8px;color:rgba(255,255,255,.6);font-size:12px;letter-spacing:.05em}
+.badge-icon{font-size:18px}
+
+/* ── MARQUEE ── */
+.marquee-wrap{background:var(--gold);padding:10px 0;overflow:hidden}
+.marquee{display:flex;gap:48px;animation:marquee 20s linear infinite;white-space:nowrap}
+.marquee span{font-size:11px;letter-spacing:.25em;text-transform:uppercase;color:var(--ink);font-weight:500}
+.marquee span::after{content:'◆';margin-left:48px;opacity:.4}
+@keyframes marquee{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+
+/* ── SECTIONS ── */
+section{padding:80px 24px}
+.container{max-width:1200px;margin:0 auto}
+.section-label{font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:12px}
+.section-title{font-family:'Cormorant Garamond',serif;font-size:clamp(32px,4vw,52px);font-weight:300;line-height:1.1;margin-bottom:16px}
+.section-desc{font-size:15px;color:var(--muted);max-width:560px;line-height:1.7}
+
+/* ── TRACKS ── */
+.tracks{background:var(--cream)}
+.tracks-grid{display:grid;grid-template-columns:1fr 1fr;gap:2px;margin-top:48px}
+.track{padding:48px;position:relative;overflow:hidden}
+.track-1{background:var(--olive)}
+.track-2{background:#2a1f3d}
+.track::before{content:'';position:absolute;top:-40px;right:-40px;width:160px;height:160px;border-radius:50%;opacity:.06;background:#fff}
+.track-num{font-family:'Cormorant Garamond',serif;font-size:80px;font-weight:300;color:rgba(255,255,255,.08);position:absolute;top:16px;right:24px;line-height:1}
+.track-icon{font-size:28px;margin-bottom:16px}
+.track-name{font-family:'Cormorant Garamond',serif;font-size:28px;color:#fff;margin-bottom:8px;font-weight:400}
+.track-tagline{font-size:13px;color:rgba(255,255,255,.55);letter-spacing:.08em;text-transform:uppercase;margin-bottom:20px}
+.track-desc{font-size:14px;color:rgba(255,255,255,.75);line-height:1.7;margin-bottom:24px}
+.track-tags{display:flex;flex-wrap:wrap;gap:8px}
+.tag{background:rgba(255,255,255,.12);color:rgba(255,255,255,.8);font-size:11px;padding:4px 12px;border-radius:20px;letter-spacing:.05em}
+
+/* ── PRODUCTS ── */
+.products-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:24px;margin-top:48px}
+.product-card{background:var(--white);border-radius:12px;overflow:hidden;box-shadow:var(--shadow);transition:var(--trans);cursor:pointer}
+.product-card:hover{transform:translateY(-6px);box-shadow:var(--shadow-h)}
+.product-img{height:220px;display:flex;align-items:center;justify-content:center;font-size:64px;position:relative;overflow:hidden}
+.product-img.food{background:linear-gradient(135deg,#f0ead6,#e8dfc8)}
+.product-img.cookware{background:linear-gradient(135deg,#2a2a2a,#444)}
+.product-img.tech{background:linear-gradient(135deg,#1a1f3d,#2d3560)}
+.product-img.health{background:linear-gradient(135deg,#2d4a2e,#4a7a4b)}
+.track-badge{position:absolute;top:12px;left:12px;font-size:10px;padding:4px 10px;border-radius:20px;letter-spacing:.08em;font-weight:500}
+.track-badge.t1{background:var(--olive);color:#fff}
+.track-badge.t2{background:#2a1f3d;color:#fff}
+.exclusive-badge{position:absolute;top:12px;right:12px;background:var(--gold);color:var(--ink);font-size:9px;padding:4px 8px;border-radius:20px;font-weight:500;letter-spacing:.08em}
+.product-body{padding:20px}
+.product-name{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:600;margin-bottom:4px;line-height:1.2}
+.product-origin{font-size:11px;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;margin-bottom:12px}
+.product-desc{font-size:13px;color:var(--muted);line-height:1.6;margin-bottom:16px}
+.product-footer{display:flex;align-items:center;justify-content:space-between;padding-top:16px;border-top:1px solid var(--border)}
+.product-price{font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:600;color:var(--olive)}
+.product-delivery{font-size:11px;color:var(--muted)}
+.btn-order{background:var(--olive);color:#fff;padding:8px 18px;border-radius:var(--r);font-size:12px;letter-spacing:.06em;text-decoration:none;transition:var(--trans);font-weight:500}
+.btn-order:hover{background:var(--olive-l)}
+
+/* ── WHY US ── */
+.why{background:var(--parchm)}
+.why-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:32px;margin-top:48px}
+.why-item{text-align:center;padding:32px 20px}
+.why-icon{font-size:36px;margin-bottom:16px}
+.why-title{font-family:'Cormorant Garamond',serif;font-size:20px;margin-bottom:10px}
+.why-text{font-size:13px;color:var(--muted);line-height:1.7}
+
+/* ── CONTACT ── */
+.contact-wrap{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:start;margin-top:48px}
+.contact-info h3{font-family:'Cormorant Garamond',serif;font-size:28px;margin-bottom:16px;font-weight:400}
+.contact-info p{font-size:14px;color:var(--muted);line-height:1.8;margin-bottom:24px}
+.contact-detail{display:flex;align-items:center;gap:12px;margin-bottom:12px;font-size:14px}
+.contact-detail-icon{width:36px;height:36px;background:var(--olive);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+.delivery-info{background:var(--cream);border-radius:12px;padding:24px;margin-top:24px;border-left:3px solid var(--gold)}
+.delivery-info h4{font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);margin-bottom:12px}
+.delivery-row{display:flex;justify-content:space-between;font-size:13px;padding:6px 0;border-bottom:1px solid var(--border)}
+.delivery-row:last-child{border-bottom:none}
+.order-form{background:var(--white);border-radius:12px;padding:36px;box-shadow:var(--shadow)}
+.form-title{font-family:'Cormorant Garamond',serif;font-size:26px;margin-bottom:24px;font-weight:400}
+.form-group{margin-bottom:20px}
+.form-group label{display:block;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+.form-group input,.form-group select,.form-group textarea{width:100%;padding:12px 16px;border:1px solid var(--border);border-radius:var(--r);font-family:'DM Sans',sans-serif;font-size:14px;color:var(--ink);background:var(--warm);transition:var(--trans);outline:none}
+.form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:var(--olive);background:#fff}
+.form-group textarea{height:100px;resize:vertical}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.form-submit{width:100%;padding:16px;background:var(--olive);color:#fff;border:none;border-radius:var(--r);font-size:13px;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;transition:var(--trans);font-family:'DM Sans',sans-serif;font-weight:500;margin-top:8px}
+.form-submit:hover{background:var(--olive-l);transform:translateY(-1px)}
+.form-note{font-size:11px;color:var(--muted);text-align:center;margin-top:12px;line-height:1.6}
+
+/* ── ABOUT ── */
+.about{background:var(--white)}
+.about-inner{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center}
+.about-visual{background:linear-gradient(135deg,var(--olive),#2a3d2b);border-radius:16px;height:400px;display:flex;align-items:center;justify-content:center;font-size:80px;position:relative;overflow:hidden}
+.about-visual::after{content:'ORIGO';font-family:'Cormorant Garamond',serif;font-size:80px;color:rgba(255,255,255,.06);position:absolute;bottom:-10px;right:-10px;letter-spacing:.2em}
+.about-text .section-title{font-size:clamp(28px,3vw,42px)}
+.stat-row{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:40px}
+.stat{text-align:center;padding:20px;background:var(--warm);border-radius:10px}
+.stat-num{font-family:'Cormorant Garamond',serif;font-size:36px;color:var(--olive);font-weight:600;line-height:1}
+.stat-label{font-size:11px;color:var(--muted);margin-top:4px;letter-spacing:.08em}
+
+/* ── FOOTER ── */
+footer{background:var(--ink);color:rgba(255,255,255,.6);padding:48px 24px 24px}
+.footer-inner{max-width:1200px;margin:0 auto}
+.footer-top{display:grid;grid-template-columns:1fr 2fr;gap:48px;margin-bottom:40px}
+.footer-brand .logo-mark{color:rgba(255,255,255,.9)}
+.footer-brand p{font-size:13px;margin-top:12px;line-height:1.7;color:rgba(255,255,255,.45)}
+.footer-links{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.footer-col h4{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.3);margin-bottom:16px}
+.footer-col a{display:block;font-size:13px;color:rgba(255,255,255,.55);text-decoration:none;margin-bottom:8px;transition:var(--trans)}
+.footer-col a:hover{color:#fff}
+.footer-bottom{display:flex;justify-content:space-between;align-items:center;padding-top:24px;border-top:1px solid rgba(255,255,255,.08);font-size:12px;flex-wrap:wrap;gap:12px}
+
+/* ── TOAST ── */
+.toast{position:fixed;bottom:24px;right:24px;background:var(--olive);color:#fff;padding:14px 24px;border-radius:var(--r);font-size:14px;transform:translateY(80px);opacity:0;transition:var(--trans);z-index:999;box-shadow:var(--shadow-h)}
+.toast.show{transform:translateY(0);opacity:1}
+
+/* ── MOBILE ── */
+@media(max-width:768px){
+  nav{display:none}nav.open{display:flex;flex-direction:column;position:absolute;top:72px;left:0;right:0;background:var(--cream);padding:24px;border-bottom:1px solid var(--border);gap:20px}
+  .hamburger{display:flex}
+  .tracks-grid{grid-template-columns:1fr}
+  .contact-wrap,.about-inner,.footer-top{grid-template-columns:1fr}
+  .about-visual{height:200px}
+  .footer-links{grid-template-columns:1fr 1fr}
+  .form-row{grid-template-columns:1fr}
+  section{padding:60px 20px}
+}
+
+/* ── LANGUAGE VISIBILITY ── */
+[data-lang]{display:none}
+body.lt [data-lang="lt"]{display:block}
+body.lt span[data-lang="lt"]{display:inline}
+body.lt [data-lang="lt"].flex{display:flex}
+body.en [data-lang="en"]{display:block}
+body.en span[data-lang="en"]{display:inline}
+body.en [data-lang="en"].flex{display:flex}
+body.pl [data-lang="pl"]{display:block}
+body.pl span[data-lang="pl"]{display:inline}
+body.pl [data-lang="pl"].flex{display:flex}
+
+/* Inline lang variants */
+.t span[data-lang]{display:none}
+body.lt .t span[data-lang="lt"],
+body.en .t span[data-lang="en"],
+body.pl .t span[data-lang="pl"]{display:inline}
+
+/* ── SCROLL REVEAL ── */
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .6s ease,transform .6s ease}
+.reveal.visible{opacity:1;transform:none}
+</style>
+</head>
+<body class="lt">
+
+<!-- LANGUAGE BAR -->
+<div class="lang-bar">
+  <a href="#" onclick="setLang('lt')" id="lang-lt" class="active">LT — Lietuvių</a>
+  <a href="#" onclick="setLang('en')" id="lang-en">EN — English</a>
+  <a href="#" onclick="setLang('pl')" id="lang-pl">PL — Polski</a>
+</div>
+
+<!-- HEADER -->
+<header>
+  <div class="header-inner">
+    <a href="#" class="logo">
+      <span class="logo-mark">ORIGO</span>
+      <span class="logo-dot"></span>
+      <span class="logo-sub t">
+        <span data-lang="lt">Rinktiniai produktai</span>
+        <span data-lang="en">Selected products</span>
+        <span data-lang="pl">Wybrane produkty</span>
+      </span>
+    </a>
+    <nav id="main-nav">
+      <a href="#products" class="t">
+        <span data-lang="lt">Produktai</span>
+        <span data-lang="en">Products</span>
+        <span data-lang="pl">Produkty</span>
+      </a>
+      <a href="#about" class="t">
+        <span data-lang="lt">Apie mus</span>
+        <span data-lang="en">About</span>
+        <span data-lang="pl">O nas</span>
+      </a>
+      <a href="#contact" class="nav-cta t">
+        <span data-lang="lt">Užsakyti</span>
+        <span data-lang="en">Order</span>
+        <span data-lang="pl">Zamów</span>
+      </a>
+    </nav>
+    <div class="hamburger" onclick="toggleMenu()"><span></span><span></span><span></span></div>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-content reveal">
+    <div class="hero-eyebrow t">
+      <span data-lang="lt">Vilnius, Lietuva — Pristatome į visą Baltijos regioną</span>
+      <span data-lang="en">Vilnius, Lithuania — Delivering across the Baltic region</span>
+      <span data-lang="pl">Wilno, Litwa — Dostawa do całego regionu bałtyckiego</span>
+    </div>
+    <h1 class="hero-title">
+      <span class="t">
+        <span data-lang="lt">Išrinkta<br><em>tiesiai iš šaltinio</em></span>
+        <span data-lang="en">Selected<br><em>from the source</em></span>
+        <span data-lang="pl">Wybrane<br><em>prosto ze źródła</em></span>
+      </span>
+    </h1>
+    <p class="hero-subtitle t">
+      <span data-lang="lt">Aukštos kokybės produktai iš Europos — maistas, virtuvės reikmenys ir technologijos. Kiekvienas produktas asmeniškai patikrintas prieš siūlant jums.</span>
+      <span data-lang="en">High-quality products sourced from Europe — premium food, cookware, and technology. Every product personally tested before we offer it to you.</span>
+      <span data-lang="pl">Produkty wysokiej jakości pozyskiwane z Europy — żywność premium, naczynia i technologia. Każdy produkt osobiście przetestowany zanim go zaoferujemy.</span>
+    </p>
+    <div class="hero-actions">
+      <a href="#products" class="btn btn-primary t">
+        <span data-lang="lt">Peržiūrėti produktus</span>
+        <span data-lang="en">Browse products</span>
+        <span data-lang="pl">Przeglądaj produkty</span>
+      </a>
+      <a href="#contact" class="btn btn-outline t">
+        <span data-lang="lt">Užsakyti</span>
+        <span data-lang="en">Place an order</span>
+        <span data-lang="pl">Złóż zamówienie</span>
+      </a>
+    </div>
+    <div class="hero-badges">
+      <div class="badge"><span class="badge-icon">🚚</span>
+        <span class="t"><span data-lang="lt">LP Express / Omniva</span><span data-lang="en">LP Express / Omniva</span><span data-lang="pl">LP Express / Omniva</span></span>
+      </div>
+      <div class="badge"><span class="badge-icon">🇪🇺</span>
+        <span class="t"><span data-lang="lt">ES kilmės produktai</span><span data-lang="en">EU origin products</span><span data-lang="pl">Produkty z UE</span></span>
+      </div>
+      <div class="badge"><span class="badge-icon">✅</span>
+        <span class="t"><span data-lang="lt">Asmeniškai patikrinta</span><span data-lang="en">Personally tested</span><span data-lang="pl">Osobiście przetestowane</span></span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-wrap">
+  <div class="marquee" id="marquee-content"></div>
+</div>
+
+<!-- TRACKS -->
+<section class="tracks">
+  <div class="container">
+    <div class="section-label t"><span data-lang="lt">Kaip mes dirbame</span><span data-lang="en">How we work</span><span data-lang="pl">Jak działamy</span></div>
+    <h2 class="section-title reveal t"><span data-lang="lt">Du produktų keliai</span><span data-lang="en">Two product tracks</span><span data-lang="pl">Dwie ścieżki produktów</span></h2>
+    <div class="tracks-grid reveal">
+      <div class="track track-1">
+        <span class="track-num">1</span>
+        <div class="track-icon">🫙</div>
+        <h3 class="track-name t"><span data-lang="lt">Kasdieniai rinktiniai</span><span data-lang="en">Everyday selection</span><span data-lang="pl">Codzienny wybór</span></h3>
+        <p class="track-tagline t"><span data-lang="lt">Maistas · Virtuvė · Sveikata</span><span data-lang="en">Food · Kitchen · Health</span><span data-lang="pl">Żywność · Kuchnia · Zdrowie</span></p>
+        <p class="track-desc t"><span data-lang="lt">Iš Europos šaltinių gauti aukštos kokybės produktai, kuriuos laikome sandėlyje ir pristatome greitai. Natūralūs, patikimos kilmės.</span><span data-lang="en">High-quality products sourced from Europe, kept in stock for fast delivery. Natural, verified origin, no returns needed.</span><span data-lang="pl">Produkty wysokiej jakości pozyskiwane z Europy, dostępne od ręki. Naturalne, zweryfikowane pochodzenie.</span></p>
+        <div class="track-tags">
+          <span class="tag t"><span data-lang="lt">Ekstra tyras aliejus</span><span data-lang="en">Extra virgin olive oil</span><span data-lang="pl">Oliwa extra virgin</span></span>
+          <span class="tag t"><span data-lang="lt">Specialty kava</span><span data-lang="en">Specialty coffee</span><span data-lang="pl">Kawa specialty</span></span>
+          <span class="tag t"><span data-lang="lt">Ketaus indai</span><span data-lang="en">Cast iron</span><span data-lang="pl">Żeliwo</span></span>
+          <span class="tag t"><span data-lang="lt">Himalajų druska</span><span data-lang="en">Himalayan salt</span><span data-lang="pl">Sól himalajska</span></span>
+          <span class="tag t"><span data-lang="lt">Menkių aliejus</span><span data-lang="en">Cod liver oil</span><span data-lang="pl">Olej z dorsza</span></span>
+        </div>
+      </div>
+      <div class="track track-2">
+        <span class="track-num">2</span>
+        <div class="track-icon">🖥️</div>
+        <h3 class="track-name t"><span data-lang="lt">Išskirtiniai</span><span data-lang="en">Exclusive items</span><span data-lang="pl">Produkty ekskluzywne</span></h3>
+        <p class="track-tagline t"><span data-lang="lt">Technologijos · Specializuota įranga</span><span data-lang="en">Technology · Specialist equipment</span><span data-lang="pl">Technologia · Sprzęt specjalistyczny</span></p>
+        <p class="track-desc t"><span data-lang="lt">Rinktiniai technologiniai produktai, kuriuos patys naudojame ir tikrinome. Riboti kiekiai, greitas pristatymas iš tiekėjo.</span><span data-lang="en">Selected tech products we use and have personally tested. Limited quantities, direct delivery from verified suppliers within 7–14 days.</span><span data-lang="pl">Wybrane produkty technologiczne, których sami używamy. Ograniczone ilości, dostawa bezpośrednio od dostawcy w 7–14 dni.</span></p>
+        <div class="track-tags">
+          <span class="tag">TerraMaster NAS</span>
+          <span class="tag">Epson EcoTank</span>
+          <span class="tag t"><span data-lang="lt">Saugyklos sprendimai</span><span data-lang="en">Storage solutions</span><span data-lang="pl">Rozwiązania storage</span></span>
+          <span class="tag t"><span data-lang="lt">14 d. grąžinimas</span><span data-lang="en">14-day returns</span><span data-lang="pl">Zwrot 14 dni</span></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRODUCTS -->
+<section id="products">
+  <div class="container">
+    <div class="section-label t"><span data-lang="lt">Mūsų asortimentas</span><span data-lang="en">Our range</span><span data-lang="pl">Nasza oferta</span></div>
+    <h2 class="section-title reveal t"><span data-lang="lt">Rinktiniai produktai</span><span data-lang="en">Selected products</span><span data-lang="pl">Wybrane produkty</span></h2>
+    <p class="section-desc reveal t"><span data-lang="lt">Kiekvienas produktas asmeniškai patikrintas. Riboti kiekiai — kokybė svarbiau nei kiekis.</span><span data-lang="en">Every product personally tested. Limited quantities — quality over volume.</span><span data-lang="pl">Każdy produkt osobiście przetestowany. Ograniczone ilości — jakość ponad ilość.</span></p>
+    <div class="products-grid" id="products-grid"></div>
+  </div>
+</section>
+
+<!-- WHY US -->
+<section class="why">
+  <div class="container">
+    <div class="section-label t"><span data-lang="lt">Kodėl ORIGO</span><span data-lang="en">Why ORIGO</span><span data-lang="pl">Dlaczego ORIGO</span></div>
+    <h2 class="section-title reveal t"><span data-lang="lt">Skirtumas aiškus</span><span data-lang="en">The difference is clear</span><span data-lang="pl">Różnica jest wyraźna</span></h2>
+    <div class="why-grid" id="why-grid"></div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about" class="about">
+  <div class="container">
+    <div class="about-inner">
+      <div class="about-visual reveal">🌿</div>
+      <div class="about-text reveal">
+        <div class="section-label t"><span data-lang="lt">Apie mus</span><span data-lang="en">About us</span><span data-lang="pl">O nas</span></div>
+        <h2 class="section-title t"><span data-lang="lt">Iš Vilniaus<br>į jūsų namus</span><span data-lang="en">From Vilnius<br>to your home</span><span data-lang="pl">Z Wilna<br>do Twojego domu</span></h2>
+        <p style="font-size:14px;color:var(--muted);line-height:1.8;margin-top:16px" class="t">
+          <span data-lang="lt">Esame maža Vilniaus įmonė, kuri rūpestingai atrenka produktus iš Europos ir pasaulio. Kiekvienas produktas pirmiausia patikinamas — pats jį naudojame prieš siūlydami jums. Mažas kiekis, didelė kokybė.</span>
+          <span data-lang="en">We are a small Vilnius-based business that carefully selects products from Europe and beyond. Every product is personally tested — we use it ourselves before offering it to you. Small volumes, exceptional quality.</span>
+          <span data-lang="pl">Jesteśmy małą firmą z Wilna, która starannie dobiera produkty z Europy i ze świata. Każdy produkt jest osobiście testowany — sami go używamy zanim go zaproponujemy. Małe ilości, wyjątkowa jakość.</span>
+        </p>
+        <div class="stat-row">
+          <div class="stat"><div class="stat-num">EU</div><div class="stat-label t"><span data-lang="lt">Kilmės šaltiniai</span><span data-lang="en">Origin sources</span><span data-lang="pl">Źródła pochodzenia</span></div></div>
+          <div class="stat"><div class="stat-num">14d</div><div class="stat-label t"><span data-lang="lt">Grąžinimo laikas</span><span data-lang="en">Return window</span><span data-lang="pl">Okno zwrotu</span></div></div>
+          <div class="stat"><div class="stat-num">✓</div><div class="stat-label t"><span data-lang="lt">Patikrinta asmeniškai</span><span data-lang="en">Personally tested</span><span data-lang="pl">Osobiście zbadane</span></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" style="background:var(--cream)">
+  <div class="container">
+    <div class="section-label t"><span data-lang="lt">Susisiekite</span><span data-lang="en">Get in touch</span><span data-lang="pl">Kontakt</span></div>
+    <h2 class="section-title reveal t"><span data-lang="lt">Užsakykite dabar</span><span data-lang="en">Order now</span><span data-lang="pl">Zamów teraz</span></h2>
+    <div class="contact-wrap">
+      <div class="contact-info reveal">
+        <h3 class="t"><span data-lang="lt">Kaip užsakyti?</span><span data-lang="en">How to order?</span><span data-lang="pl">Jak zamówić?</span></h3>
+        <p class="t">
+          <span data-lang="lt">Užpildykite formą arba rašykite el. paštu. Patvirtinsime užsakymą per 24 val. ir atsiųsime mokėjimo informaciją.</span>
+          <span data-lang="en">Fill the form or write to us by email. We confirm your order within 24 hours and send payment details.</span>
+          <span data-lang="pl">Wypełnij formularz lub napisz do nas e-mailem. Potwierdzimy zamówienie w ciągu 24 godzin i wyślemy dane do płatności.</span>
+        </p>
+        <div class="contact-detail"><span class="contact-detail-icon">✉️</span><span>info@iieik.eu</span></div>
+        <div class="contact-detail"><span class="contact-detail-icon">📍</span><span class="t"><span data-lang="lt">Vilnius, Lietuva</span><span data-lang="en">Vilnius, Lithuania</span><span data-lang="pl">Wilno, Litwa</span></span></div>
+        <div class="delivery-info">
+          <h4 class="t"><span data-lang="lt">Pristatymo informacija</span><span data-lang="en">Delivery info</span><span data-lang="pl">Informacje o dostawie</span></h4>
+          <div class="delivery-row"><span class="t"><span data-lang="lt">Lietuva (sandėlyje)</span><span data-lang="en">Lithuania (in stock)</span><span data-lang="pl">Litwa (z magazynu)</span></span><span>1–2 d.</span></div>
+          <div class="delivery-row"><span class="t"><span data-lang="lt">Lietuva (iš tiekėjo)</span><span data-lang="en">Lithuania (from supplier)</span><span data-lang="pl">Litwa (od dostawcy)</span></span><span>5–10 d.</span></div>
+          <div class="delivery-row"><span class="t"><span data-lang="lt">Latvija / Estija</span><span data-lang="en">Latvia / Estonia</span><span data-lang="pl">Łotwa / Estonia</span></span><span>3–7 d.</span></div>
+          <div class="delivery-row"><span class="t"><span data-lang="lt">Lenkija</span><span data-lang="en">Poland</span><span data-lang="pl">Polska</span></span><span>5–10 d.</span></div>
+          <div class="delivery-row"><span class="t"><span data-lang="lt">Išskirtiniai (iš HK)</span><span data-lang="en">Exclusive (from HK)</span><span data-lang="pl">Ekskluzywne (z HK)</span></span><span>7–14 d.</span></div>
+        </div>
+      </div>
+      <div class="order-form reveal">
+        <h3 class="form-title t"><span data-lang="lt">Užsakymo forma</span><span data-lang="en">Order form</span><span data-lang="pl">Formularz zamówienia</span></h3>
+        <form id="order-form" onsubmit="submitForm(event)">
+          <div class="form-row">
+            <div class="form-group">
+              <label class="t"><span data-lang="lt">Vardas</span><span data-lang="en">Name</span><span data-lang="pl">Imię i nazwisko</span></label>
+              <input type="text" required placeholder="Jonas Jonaitis">
+            </div>
+            <div class="form-group">
+              <label class="t"><span data-lang="lt">El. paštas</span><span data-lang="en">Email</span><span data-lang="pl">E-mail</span></label>
+              <input type="email" required placeholder="jonas@example.lt">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="t"><span data-lang="lt">Telefonas</span><span data-lang="en">Phone</span><span data-lang="pl">Telefon</span></label>
+              <input type="tel" placeholder="+370 600 00000">
+            </div>
+            <div class="form-group">
+              <label class="t"><span data-lang="lt">Miestas / Šalis</span><span data-lang="en">City / Country</span><span data-lang="pl">Miasto / Kraj</span></label>
+              <input type="text" placeholder="Vilnius, LT">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="t"><span data-lang="lt">Produktas</span><span data-lang="en">Product</span><span data-lang="pl">Produkt</span></label>
+            <select required id="product-select">
+              <option value="" class="t" disabled selected><span data-lang="lt">— Pasirinkite —</span><span data-lang="en">— Select —</span><span data-lang="pl">— Wybierz —</span></option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="t"><span data-lang="lt">Kiekis ir pastabos</span><span data-lang="en">Quantity and notes</span><span data-lang="pl">Ilość i uwagi</span></label>
+            <textarea placeholder="..."></textarea>
+          </div>
+          <button type="submit" class="form-submit t"><span data-lang="lt">Siųsti užsakymą</span><span data-lang="en">Send order</span><span data-lang="pl">Wyślij zamówienie</span></button>
+          <p class="form-note t"><span data-lang="lt">Atsakysime per 24 val. Mokėjimas — banko pavedimu arba PayPal.</span><span data-lang="en">We respond within 24h. Payment by bank transfer or PayPal.</span><span data-lang="pl">Odpowiadamy w ciągu 24h. Płatność przelewem lub PayPal.</span></p>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="logo-mark">ORIGO</div>
+        <p class="t"><span data-lang="lt">Rinktiniai produktai iš Europos. Vilnius, Lietuva.</span><span data-lang="en">Selected products from Europe. Vilnius, Lithuania.</span><span data-lang="pl">Wybrane produkty z Europy. Wilno, Litwa.</span></p>
+        <p style="margin-top:8px;font-size:12px;color:rgba(255,255,255,.3)">iieik.eu · info@iieik.eu</p>
+      </div>
+      <div class="footer-links">
+        <div class="footer-col">
+          <h4 class="t"><span data-lang="lt">Produktai</span><span data-lang="en">Products</span><span data-lang="pl">Produkty</span></h4>
+          <a href="#products" class="t"><span data-lang="lt">Maistas</span><span data-lang="en">Food</span><span data-lang="pl">Żywność</span></a>
+          <a href="#products" class="t"><span data-lang="lt">Virtuvė</span><span data-lang="en">Cookware</span><span data-lang="pl">Naczynia</span></a>
+          <a href="#products" class="t"><span data-lang="lt">Technologijos</span><span data-lang="en">Technology</span><span data-lang="pl">Technologia</span></a>
+          <a href="#products" class="t"><span data-lang="lt">Sveikata</span><span data-lang="en">Health</span><span data-lang="pl">Zdrowie</span></a>
+        </div>
+        <div class="footer-col">
+          <h4 class="t"><span data-lang="lt">Informacija</span><span data-lang="en">Information</span><span data-lang="pl">Informacje</span></h4>
+          <a href="#about" class="t"><span data-lang="lt">Apie mus</span><span data-lang="en">About us</span><span data-lang="pl">O nas</span></a>
+          <a href="#contact" class="t"><span data-lang="lt">Pristatymas</span><span data-lang="en">Delivery</span><span data-lang="pl">Dostawa</span></a>
+          <a href="#contact" class="t"><span data-lang="lt">Grąžinimas</span><span data-lang="en">Returns</span><span data-lang="pl">Zwroty</span></a>
+          <a href="mailto:info@iieik.eu">info@iieik.eu</a>
+        </div>
+        <div class="footer-col">
+          <h4 class="t"><span data-lang="lt">Raskite mus</span><span data-lang="en">Find us on</span><span data-lang="pl">Znajdź nas na</span></h4>
+          <a href="#">kaina.lt</a>
+          <a href="#">kainos.lt</a>
+          <a href="#">pigu.lt</a>
+          <a href="#">skelbimai.lt</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2025 ORIGO / iieik.eu · <span class="t"><span data-lang="lt">Visos teisės saugomos</span><span data-lang="en">All rights reserved</span><span data-lang="pl">Wszelkie prawa zastrzeżone</span></span></span>
+      <span class="t"><span data-lang="lt">Individuali veikla · Vilnius, Lietuva</span><span data-lang="en">Individual business · Vilnius, Lithuania</span><span data-lang="pl">Działalność indywidualna · Wilno, Litwa</span></span>
+    </div>
+  </div>
+</footer>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ── DATA ──────────────────────────────────────────────────────────────────
+const LANG = { lt:0, en:1, pl:2 };
+let currentLang = 'lt';
+
+const products = [
+  { icon:'🫒', cat:'food', track:'t1',
+    name:['Ekstra Tyras Aliejus 500ml','Extra Virgin Olive Oil 500ml','Oliwa Extra Virgin 500ml'],
+    origin:['Graikija / Vokietija','Greece / Germany','Grecja / Niemcy'],
+    desc:['DOP sertifikuotas ekstra tyras aliejus. Šalto spaudimo, natūralus aromatas.','DOP certified cold-pressed EVOO. Natural aroma, verified EU origin.','Oliwa EV z certyfikatem DOP. Tłoczona na zimno, naturalny aromat.'],
+    price:'€14.90', delivery:['1–5 d.','1–5 days','1–5 dni'], exclusive:false },
+  { icon:'🫒', cat:'food', track:'t1',
+    name:['Ekstra Tyras Aliejus 1L','Extra Virgin Olive Oil 1L','Oliwa Extra Virgin 1L'],
+    origin:['Graikija / Vokietija','Greece / Germany','Grecja / Niemcy'],
+    desc:['Tas pats DOP sertifikuotas aliejus — ekonomiškesnis formatas kasdieniam naudojimui.','Same DOP certified oil — more economical 1L format for daily use.','Ta sama oliwa DOP — format 1L do codziennego użytku.'],
+    price:'€24.90', delivery:['1–5 d.','1–5 days','1–5 dni'], exclusive:false },
+  { icon:'☕', cat:'food', track:'t1',
+    name:['Specialty Kavos Pupelės 250g','Specialty Coffee Beans 250g','Kawa Specialty 250g'],
+    origin:['Europa (skrūdinta)','Europe (roasted)','Europa (palona)'],
+    desc:['Specialty lygio arabika. Šviežiai skrūdinta nedidelėmis partijomis Europoje.','Specialty grade arabica. Freshly roasted in small batches in Europe.','Arabica specialty. Świeżo palona w małych partiach w Europie.'],
+    price:'€15.90', delivery:['1–3 d.','1–3 days','1–3 dni'], exclusive:false },
+  { icon:'🍳', cat:'cookware', track:'t1',
+    name:['Ketaus Keptuvė 26cm','Cast Iron Pan 26cm','Patelnia Żeliwna 26cm'],
+    origin:['Vokietija','Germany','Niemcy'],
+    desc:['Profesionalios kokybės ketaus keptuvė. Paruošta naudojimui, tarnauja visą gyvenimą.','Professional grade cast iron pan. Pre-seasoned, serves a lifetime with care.','Patelnia żeliwna klasy profesjonalnej. Wstępnie sezonowana, służy przez całe życie.'],
+    price:'€74.90', delivery:['3–7 d.','3–7 days','3–7 dni'], exclusive:false },
+  { icon:'🧂', cat:'food', track:'t1',
+    name:['Rožinė Himalajų Druska 1kg','Pink Himalayan Salt 1kg','Sól Himalajska Różowa 1kg'],
+    origin:['Lenkija (importas)','Poland (imported)','Polska (import)'],
+    desc:['Natūrali Himalajų druska su mineralais. Ideali maisto gamybai ir sezonuoti.','Natural Himalayan salt with minerals. Ideal for cooking and seasoning.','Naturalna sól himalajska z minerałami. Idealna do gotowania i przyprawiania.'],
+    price:'€6.90', delivery:['1–3 d.','1–3 days','1–3 dni'], exclusive:false },
+  { icon:'🐟', cat:'health', track:'t1',
+    name:['Menkių Kepenų Aliejus 200ml','Cod Liver Oil 200ml','Olej z Wątroby Dorsza 200ml'],
+    origin:['ES','EU','UE'],
+    desc:['Aukštos kokybės menkių kepenų aliejus. Turtingas omega-3, vitaminu D ir A.','High quality cod liver oil. Rich in omega-3, vitamins D and A.','Olej z wątroby dorsza wysokiej jakości. Bogaty w omega-3, witaminy D i A.'],
+    price:'€12.90', delivery:['1–5 d.','1–5 days','1–5 dni'], exclusive:false },
+  { icon:'🖥️', cat:'tech', track:'t2',
+    name:['TerraMaster F4-423 NAS','TerraMaster F4-423 NAS','TerraMaster F4-423 NAS'],
+    origin:['Honkongas','Hong Kong','Hongkong'],
+    desc:['4 vietų NAS serveris. Asmeniškai naudojamas ir patikrintas. Idealus namų ar mažos biuro saugyklai.','4-bay NAS server. Personally used and tested. Ideal home or small office storage solution.','Serwer NAS 4-zatokowy. Osobiście używany i przetestowany. Idealne rozwiązanie do przechowywania danych.'],
+    price:'€389.00', delivery:['7–14 d.','7–14 days','7–14 dni'], exclusive:true },
+  { icon:'🖨️', cat:'tech', track:'t2',
+    name:['Epson EcoTank ET-8550','Epson EcoTank ET-8550','Epson EcoTank ET-8550'],
+    origin:['ES','EU','UE'],
+    desc:['A3+ formato rašalinis spausdintuvas su dideliu rašalo talpa. Profesionali foto kokybė namuose.','A3+ inkjet printer with large ink tank. Professional photo quality at home.','Drukarka atramentowa A3+ z dużym zbiornikiem tuszu. Profesjonalna jakość foto w domu.'],
+    price:'€649.00', delivery:['7–14 d.','7–14 days','7–14 dni'], exclusive:true },
+  { icon:'🍳', cat:'cookware', track:'t1',
+    name:['Ketaus Puodas 4L','Cast Iron Dutch Oven 4L','Garnek Żeliwny 4L'],
+    origin:['Vokietija','Germany','Niemcy'],
+    desc:['Klasikinis ketaus puodas 4L. Sriuboms, troškiniams, kepimui orkaitėje. Neribota tarnavimo trukmė.','Classic 4L cast iron dutch oven. Perfect for soups, stews, and oven roasting. Unlimited service life.','Klasyczny żeliwny garnek 4L. Idealny do zup, gulaszów i pieczenia w piekarniku.'],
+    price:'€99.90', delivery:['3–7 d.','3–7 days','3–7 dni'], exclusive:false },
+];
+
+const whyItems = [
+  { icon:'🔍', title:['Asmeniškai patikrinta','Personally tested','Osobiście przetestowane'],
+    text:['Kiekvieną produktą pats naudojame prieš siūlydami. Jokių staigmenų.','We use every product ourselves before offering it. No surprises.','Każdy produkt sami używamy zanim go zaproponujemy. Żadnych niespodzianek.'] },
+  { icon:'🇪🇺', title:['ES kilmės produktai','EU origin products','Produkty z UE'],
+    text:['Pirmaujame ES tiekėjus. Aiški kilmė, kokybiški sertifikatai.','We prioritise EU suppliers. Clear origin, quality certifications.','Priorytetowo traktujemy dostawców z UE. Jasne pochodzenie, certyfikaty jakości.'] },
+  { icon:'📦', title:['Greitas pristatymas','Fast delivery','Szybka dostawa'],
+    text:['Dauguma produktų sandėlyje Vilniuje — pristatome per 1–3 d. LP Express / Omniva.','Most products in stock in Vilnius — delivered in 1–3 days via LP Express / Omniva.','Większość produktów w magazynie w Wilnie — dostawa w 1–3 dni przez LP Express / Omniva.'] },
+  { icon:'💬', title:['Atsakome per 24h','Response within 24h','Odpowiedź w 24h'],
+    text:['Kiekvienas užklausimas svarbus. Atsakome lietuviškai, angliškai ir lenkiškai.','Every inquiry matters. We respond in Lithuanian, English, and Polish.','Każde zapytanie jest ważne. Odpowiadamy po litewsku, angielsku i polsku.'] },
+];
+
+// ── RENDER PRODUCTS ───────────────────────────────────────────────────────
+function renderProducts() {
+  const L = LANG[currentLang];
+  const grid = document.getElementById('products-grid');
+  grid.innerHTML = products.map(p => `
+    <div class="product-card reveal">
+      <div class="product-img ${p.cat}">
+        <span class="track-badge ${p.track}">${p.track === 't1' ? 'Track 1' : 'Track 2'}</span>
+        ${p.exclusive ? '<span class="exclusive-badge">EXCLUSIVE</span>' : ''}
+        <span style="font-size:56px">${p.icon}</span>
+      </div>
+      <div class="product-body">
+        <div class="product-name">${p.name[L]}</div>
+        <div class="product-origin">📍 ${p.origin[L]}</div>
+        <div class="product-desc">${p.desc[L]}</div>
+        <div class="product-footer">
+          <div>
+            <div class="product-price">${p.price}</div>
+            <div class="product-delivery">🚚 ${p.delivery[L]}</div>
+          </div>
+          <a href="#contact" class="btn-order" onclick="prefillProduct('${p.name[0]}')">
+            ${ currentLang==='lt' ? 'Užsakyti' : currentLang==='en' ? 'Order' : 'Zamów' }
+          </a>
+        </div>
+      </div>
+    </div>`).join('');
+  // Populate select
+  const sel = document.getElementById('product-select');
+  sel.innerHTML = `<option value="" disabled selected>${currentLang==='lt'?'— Pasirinkite —':currentLang==='en'?'— Select —':'— Wybierz —'}</option>` +
+    products.map(p => `<option value="${p.name[0]}">${p.name[L]} — ${p.price}</option>`).join('');
+  observeReveal();
+}
+
+function renderWhy() {
+  const L = LANG[currentLang];
+  document.getElementById('why-grid').innerHTML = whyItems.map(w => `
+    <div class="why-item reveal">
+      <div class="why-icon">${w.icon}</div>
+      <h3 class="why-title">${w.title[L]}</h3>
+      <p class="why-text">${w.text[L]}</p>
+    </div>`).join('');
+  observeReveal();
+}
+
+function renderMarquee() {
+  const items = ['EVOO · Extra Virgin Olive Oil','Specialty Coffee · Kava','Cast Iron · Ketaus Indai','Pink Salt · Himalajų Druska','TerraMaster NAS','Epson EcoTank','Cod Liver Oil · Menkių Aliejus'];
+  const full = [...items,...items,...items,...items];
+  document.getElementById('marquee-content').innerHTML = full.map(i => `<span>${i}</span>`).join('');
+}
+
+// ── LANGUAGE ──────────────────────────────────────────────────────────────
+function setLang(lang) {
+  document.body.className = lang;
+  currentLang = lang;
+  document.getElementById('lang-lt').className = lang==='lt' ? 'active' : '';
+  document.getElementById('lang-en').className = lang==='en' ? 'active' : '';
+  document.getElementById('lang-pl').className = lang==='pl' ? 'active' : '';
+  document.documentElement.lang = lang;
+  renderProducts();
+  renderWhy();
+  localStorage.setItem('origo-lang', lang);
+}
+
+// ── FORM ──────────────────────────────────────────────────────────────────
+function prefillProduct(name) {
+  setTimeout(()=>{ const s=document.getElementById('product-select'); if(s) s.value=name; }, 100);
+}
+
+function submitForm(e) {
+  e.preventDefault();
+  const toast = document.getElementById('toast');
+  const msgs = { lt:'Užsakymas išsiųstas! Atsakysime per 24 val. ✓', en:'Order sent! We will respond within 24h. ✓', pl:'Zamówienie wysłane! Odpowiemy w ciągu 24h. ✓' };
+  toast.textContent = msgs[currentLang];
+  toast.classList.add('show');
+  setTimeout(() => toast.classList.remove('show'), 4000);
+  e.target.reset();
+  // TODO: connect to Formspree — replace action with https://formspree.io/f/YOUR_ID
+}
+
+// ── NAV ───────────────────────────────────────────────────────────────────
+function toggleMenu() {
+  document.getElementById('main-nav').classList.toggle('open');
+}
+
+// ── SCROLL REVEAL ─────────────────────────────────────────────────────────
+function observeReveal() {
+  const els = document.querySelectorAll('.reveal:not(.visible)');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((e,i) => { if(e.isIntersecting) { setTimeout(()=>e.target.classList.add('visible'),i*80); io.unobserve(e.target); } });
+  }, { threshold:0.08 });
+  els.forEach(el => io.observe(el));
+}
+
+// ── INIT ──────────────────────────────────────────────────────────────────
+document.addEventListener('DOMContentLoaded', () => {
+  const saved = localStorage.getItem('origo-lang') || 'lt';
+  setLang(saved);
+  renderMarquee();
+  observeReveal();
+});
+</script>
+</body>
+</html>
