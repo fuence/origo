@@ -943,7 +943,7 @@ PAGE_TITLES = {
     "terms": {"lt": "Pirkimo–pardavimo taisyklės", "en": "Terms & Conditions", "pl": "Regulamin"},
     "returns": {"lt": "Grąžinimo sąlygos", "en": "Returns Policy", "pl": "Polityka zwrotów"},
     "privacy": {"lt": "Privatumo politika", "en": "Privacy Policy", "pl": "Polityka prywatności"},
-    "company": {"lt": "Apie pardavėją", "en": "About the seller", "pl": "O sprzedawcy"},
+    "company": {"lt": "Apie mus", "en": "About us", "pl": "O nas"},
 }
 DRAFT_NOTICE = {
     "lt": "⚠ JUODRAŠTIS — laukiama Elijo ir buhalterio/teisininko peržiūros prieš paskelbimą. "
