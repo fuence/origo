@@ -944,6 +944,7 @@ PAGE_TITLES = {
     "returns": {"lt": "Grąžinimo sąlygos", "en": "Returns Policy", "pl": "Polityka zwrotów"},
     "privacy": {"lt": "Privatumo politika", "en": "Privacy Policy", "pl": "Polityka prywatności"},
     "company": {"lt": "Apie mus", "en": "About us", "pl": "O nas"},
+    "contact": {"lt": "Kontaktai", "en": "Contact", "pl": "Kontakt"},
 }
 DRAFT_NOTICE = {
     "lt": "⚠ JUODRAŠTIS — laukiama Elijo ir buhalterio/teisininko peržiūros prieš paskelbimą. "
@@ -953,16 +954,39 @@ DRAFT_NOTICE = {
     "pl": "⚠ WERSJA ROBOCZA — oczekuje na przegląd Elijo oraz księgowego/prawnika przed publikacją. "
           "Zobacz REVIEW-CHECKLIST.md (repozytorium origo-ops).",
 }
-LEGAL_PAGE_CSS = """
-:root{--ink:#1a1a1a;--cream:#f5f0e8;--olive:#3d5a3e;--olive-l:#5a7c5b;--gold:#b8860b;--warm:#f9f5ee;--muted:#6b6560;--border:#d9d2c4;--white:#ffffff}
-*{margin:0;padding:0;box-sizing:border-box}
-body{font-family:'DM Sans',sans-serif;background:var(--warm);color:var(--ink);line-height:1.7;font-size:16px}
-.lang-bar{background:var(--olive);padding:6px 0;text-align:center}
-.lang-bar a{color:rgba(255,255,255,.6);text-decoration:none;font-size:12px;letter-spacing:.1em;text-transform:uppercase;margin:0 10px}
-.lang-bar a.active{color:#fff;font-weight:500;text-decoration:underline;text-underline-offset:3px}
-header{background:var(--cream);border-bottom:1px solid var(--border);padding:20px 24px}
-header a{font-family:'Cormorant Garamond',serif;font-size:26px;color:var(--olive);text-decoration:none;letter-spacing:.1em}
+
+# ── SITE CHROME (header/footer/cart drawer/basket+language JS) ─────────────
+# index.html is hand-maintained (never build.py-generated) and is the single
+# source of truth for the site chrome. These blocks pull that chrome out via
+# the CHROME-*:START/END comment markers in index.html so terms/returns/
+# privacy/company/contact.html render the exact same header, footer, cart
+# drawer, and basket/language/menu JS as the homepage -- no hand-duplicated
+# copy to drift out of sync. If you restructure index.html's <style> or
+# <script>, keep the markers paired (see extract_chrome_blocks() below).
+CHROME_CSS_MARKERS = [
+    "CHROME-ROOT", "CHROME-LANGBAR", "CHROME-HEADER", "CHROME-CART",
+    "CHROME-FORM", "CHROME-FOOTER", "CHROME-TOAST", "CHROME-LANGVIS",
+]
+
+# Hand-duplicated, not marker-extracted: index.html's mobile @media block
+# also holds page-specific rules (tracks-grid/contact-wrap/about-visual/
+# section padding) that don't belong on these pages. Keep in sync with
+# index.html's "MOBILE" comment note if the chrome-relevant rules change.
+MOBILE_CHROME_CSS = """
+@media(max-width:768px){
+  nav{display:none}nav.open{display:flex;flex-direction:column;position:absolute;top:72px;left:0;right:0;background:var(--cream);padding:24px;border-bottom:1px solid var(--border);gap:20px}
+  .hamburger{display:flex}
+  .footer-links{grid-template-columns:1fr 1fr}
+  .form-row{grid-template-columns:1fr}
+  .cart-drawer{width:100%;max-width:100vw}
+}
+"""
+
+# Presentational rules for legal/contact page BODY content -- not part of
+# index.html's chrome (it has no equivalent of a plain article/form page).
+LEGAL_PAGE_EXTRA_CSS = """
 .wrap{max-width:760px;margin:0 auto;padding:48px 24px 80px}
+.page-eyebrow{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:8px}
 h1{font-family:'Cormorant Garamond',serif;font-size:clamp(32px,5vw,44px);font-weight:400;margin-bottom:8px}
 h2{font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:600;margin:36px 0 12px;color:var(--olive)}
 h3{font-size:16px;font-weight:600;margin:20px 0 8px;color:var(--olive)}
@@ -977,21 +1001,77 @@ th{color:var(--olive);font-weight:600}
 .draft-notice{background:#fff4e5;border-left:3px solid var(--gold);padding:14px 18px;border-radius:6px;font-size:13px;color:#6b4f00;margin:0 0 24px;font-weight:600}
 .form-box{background:var(--white);border:1px solid var(--border);border-radius:10px;padding:20px 24px;margin-top:16px}
 .form-box p{font-size:13.5px;margin-bottom:10px}
-footer{text-align:center;padding:32px 24px;font-size:12px;color:var(--muted);border-top:1px solid var(--border)}
-[data-lang]{display:none}
-body.lt [data-lang="lt"]{display:block}
-body.en [data-lang="en"]{display:block}
-body.pl [data-lang="pl"]{display:block}
 """
 
 
-def render_legal_page(page_id: str, body_html_by_lang: dict, reviewed: bool) -> str:
-    titles = PAGE_TITLES[page_id]
-    title_line = f"{titles['lt']} | {titles['en']} | {titles['pl']}"
-    lang_divs = []
-    for lang in ("lt", "en", "pl"):
-        notice = "" if reviewed else f'<div class="draft-notice">{DRAFT_NOTICE[lang]}</div>'
-        lang_divs.append(f'<div data-lang="{lang}">{notice}{body_html_by_lang.get(lang, "")}</div>')
+def _extract_marked(text, name, close):
+    """Pulls the content between a `[name:START] ... {close}` opening
+    comment and the matching `[name:END]` closing comment. `close` is the
+    comment-closing delimiter ("*/" for CSS, "-->" for HTML) -- the regex
+    stops at the first one after START, which is exactly that comment's own
+    close (multi-line START comments never contain a second one)."""
+    pattern = re.compile(
+        rf'\[{re.escape(name)}:START\].*?{re.escape(close)}\n(.*?)\n(?:<!--|/\*)\s*\[{re.escape(name)}:END\]',
+        re.S,
+    )
+    m = pattern.search(text)
+    if not m:
+        sys.exit(f"ERROR: chrome marker '{name}' not found in index.html -- see build.py's extract_chrome_blocks()")
+    return m.group(1).strip("\n")
+
+
+def extract_chrome_blocks():
+    """Reads index.html and returns the shared site chrome: assembled CSS,
+    the header/cart-drawer/footer HTML, and the full basket+language+menu
+    JS -- for reuse across terms/returns/privacy/company/contact.html (see
+    the module-level comment above)."""
+    text = (ROOT / "index.html").read_text(encoding="utf-8")
+
+    css_parts = {name: _extract_marked(text, name, "*/") for name in CHROME_CSS_MARKERS}
+    css = "\n".join([
+        css_parts["CHROME-ROOT"],
+        # Generic resets, kept here rather than their own marker (2 lines,
+        # not worth it) -- must match index.html's own rules just below its
+        # :root block if those ever change.
+        "*{margin:0;padding:0;box-sizing:border-box}",
+        "body{font-family:'DM Sans',sans-serif;background:var(--warm);color:var(--ink);line-height:1.6;font-size:16px}",
+        *(css_parts[name] for name in CHROME_CSS_MARKERS if name != "CHROME-ROOT"),
+        MOBILE_CHROME_CSS,
+    ])
+
+    def rewrite_home_anchors(block):
+        # On every page except index.html itself, #products/#contact only
+        # exist on the homepage -- point back there instead of a dead
+        # same-page anchor. contact.html gets its OWN dedicated nav/footer
+        # link (added directly in index.html's chrome, see CHROME-HEADER-
+        # HTML/CHROME-FOOTER-HTML), so no rewrite needed for that one.
+        return (
+            block.replace('href="#products"', 'href="index.html#products"')
+                 .replace('href="#contact"', 'href="index.html#contact"')
+        )
+
+    header_html = rewrite_home_anchors(_extract_marked(text, "CHROME-HEADER-HTML", "-->"))
+    footer_html = rewrite_home_anchors(_extract_marked(text, "CHROME-FOOTER-HTML", "-->"))
+    cartdrawer_html = _extract_marked(text, "CHROME-CARTDRAWER-HTML", "-->")
+
+    js_match = re.search(r"<script>\n(.*?)\n</script>", text, re.S)
+    if not js_match:
+        sys.exit("ERROR: could not find index.html's main <script> block -- see build.py's extract_chrome_blocks()")
+
+    return {
+        "css": css,
+        "header_html": header_html,
+        "footer_html": footer_html,
+        "cartdrawer_html": cartdrawer_html,
+        "js": js_match.group(1),
+    }
+
+
+def _page_shell(title_line: str, chrome: dict, body_html: str, extra_css: str = LEGAL_PAGE_EXTRA_CSS) -> str:
+    """Common page skeleton for every chrome-wearing generated page (the 4
+    legal pages + contact.html) -- header/cart-drawer/footer/JS from
+    `chrome` (see extract_chrome_blocks()), body content supplied by the
+    caller."""
     return f"""<!DOCTYPE html>
 <html lang="lt">
 <head>
@@ -1000,33 +1080,34 @@ def render_legal_page(page_id: str, body_html_by_lang: dict, reviewed: bool) -> 
 <title>ORIGO — {html.escape(title_line)}</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
-<style>{LEGAL_PAGE_CSS}</style>
+<style>{chrome['css']}{extra_css}</style>
 </head>
 <body class="lt">
-<div class="lang-bar">
-  <a href="#" onclick="setLang('lt');return false" id="lang-lt" class="active">LT</a>
-  <a href="#" onclick="setLang('en');return false" id="lang-en">EN</a>
-  <a href="#" onclick="setLang('pl');return false" id="lang-pl">PL</a>
-</div>
-<header><a href="index.html">ORIGO</a></header>
+{chrome['header_html']}
 <div class="wrap">
-{"".join(lang_divs)}
+{body_html}
 </div>
-<footer>© 2026 ORIGO / iieik.eu · <a href="index.html">iieik.eu</a></footer>
+{chrome['cartdrawer_html']}
+{chrome['footer_html']}
 <script>
-function setLang(lang){{
-  document.body.className = lang;
-  ['lt','en','pl'].forEach(l => document.getElementById('lang-'+l).className = l===lang ? 'active' : '');
-  localStorage.setItem('origo-lang', lang);
-}}
-document.addEventListener('DOMContentLoaded', () => setLang(localStorage.getItem('origo-lang') || 'lt'));
+{chrome['js']}
 </script>
 </body>
 </html>
 """
 
 
-def build_legal_pages(config: dict) -> None:
+def render_legal_page(page_id: str, body_html_by_lang: dict, reviewed: bool, chrome: dict) -> str:
+    titles = PAGE_TITLES[page_id]
+    title_line = f"{titles['lt']} | {titles['en']} | {titles['pl']}"
+    lang_divs = []
+    for lang in ("lt", "en", "pl"):
+        notice = "" if reviewed else f'<div class="draft-notice">{DRAFT_NOTICE[lang]}</div>'
+        lang_divs.append(f'<div data-lang="{lang}">{notice}{body_html_by_lang.get(lang, "")}</div>')
+    return _page_shell(title_line, chrome, "".join(lang_divs))
+
+
+def build_legal_pages(config: dict, chrome: dict) -> None:
     """Hard build failure if any of the 4 .md sources is missing -- a
     controllable, one-time condition (unlike the food_info gate, which
     stays soft/per-product, see this module's docstring)."""
@@ -1062,8 +1143,96 @@ def build_legal_pages(config: dict) -> None:
                 body_html += withdrawal_forms[lang]
             body_html_by_lang[lang] = body_html
         page_path = ROOT / f"{page_id}.html"
-        page_path.write_text(render_legal_page(page_id, body_html_by_lang, reviewed), encoding="utf-8")
+        page_path.write_text(render_legal_page(page_id, body_html_by_lang, reviewed, chrome), encoding="utf-8")
         print(f"wrote {page_path}")
+
+
+# ── CONTACT PAGE (dedicated inquiry form, separate from ordering) ──────────
+CONTACT_PAGE_COPY = {
+    "lt": {
+        "eyebrow": "Susisiekite",
+        "title": "Turite klausimų?",
+        "intro": "Parašykite mums — atsakysime per 24 val. Užsakymams naudokite katalogo puslapį; šis formos skirtas bendriems klausimams.",
+        "name": "Vardas", "email": "El. paštas", "message": "Žinutė",
+        "consent": 'Sutinku, kad mano duomenys būtų naudojami atsakymui pateikti, ir susipažinau su '
+                   '<a href="privacy.html" target="_blank" rel="noopener">Privatumo politika</a>.',
+        "submit": "Siųsti žinutę",
+    },
+    "en": {
+        "eyebrow": "Get in touch",
+        "title": "Have a question?",
+        "intro": "Write to us — we respond within 24h. For orders, use the catalog page; this form is for general inquiries.",
+        "name": "Name", "email": "Email", "message": "Message",
+        "consent": 'I agree that my data will be used to provide a reply, and have read the '
+                   '<a href="privacy.html" target="_blank" rel="noopener">Privacy Policy</a>.',
+        "submit": "Send message",
+    },
+    "pl": {
+        "eyebrow": "Kontakt",
+        "title": "Masz pytanie?",
+        "intro": "Napisz do nas — odpowiemy w ciągu 24h. Do zamówień użyj strony katalogu; ten formularz służy do ogólnych zapytań.",
+        "name": "Imię i nazwisko", "email": "E-mail", "message": "Wiadomość",
+        "consent": 'Zgadzam się na wykorzystanie moich danych w celu udzielenia odpowiedzi i zapoznałem/-am się z '
+                   '<a href="privacy.html" target="_blank" rel="noopener">Polityką prywatności</a>.',
+        "submit": "Wyślij wiadomość",
+    },
+}
+
+
+def render_contact_page(config: dict, chrome: dict) -> str:
+    titles = PAGE_TITLES["contact"]
+    title_line = f"{titles['lt']} | {titles['en']} | {titles['pl']}"
+    secret = html.escape((config.get("contact_intake", {}) or {}).get("shared_secret", ""))
+
+    def spans(key: str, escape: bool = True) -> str:
+        parts = []
+        for lang in ("lt", "en", "pl"):
+            val = CONTACT_PAGE_COPY[lang][key]
+            parts.append(f'<span data-lang="{lang}">{html.escape(val) if escape else val}</span>')
+        return "".join(parts)
+
+    body = f"""
+<div class="page-eyebrow t">{spans('eyebrow')}</div>
+<h1 class="t">{spans('title')}</h1>
+<p class="t">{spans('intro')}</p>
+<div class="order-form" style="margin-top:32px">
+  <form id="contact-form" onsubmit="submitContactForm(event)">
+    <div class="form-group">
+      <label class="t">{spans('name')}</label>
+      <input type="text" id="c-name" required>
+    </div>
+    <div class="form-group">
+      <label class="t">{spans('email')}</label>
+      <input type="email" id="c-email" required>
+    </div>
+    <div class="form-group">
+      <label class="t">{spans('message')}</label>
+      <textarea id="c-message" required></textarea>
+    </div>
+    <!-- Anti-spam: real visitors never see or fill this (hidden off-screen),
+         same posture as the order form's honeypot -- see index.html. -->
+    <div style="position:absolute;left:-9999px;top:-9999px" aria-hidden="true">
+      <label for="c-company">Company</label>
+      <input type="text" id="c-company" name="company" tabindex="-1" autocomplete="off">
+    </div>
+    <input type="hidden" id="c-token" value="{secret}">
+    <div class="form-group form-consent">
+      <label class="consent-label">
+        <input type="checkbox" id="c-consent" required>
+        <span class="t">{spans('consent', escape=False)}</span>
+      </label>
+    </div>
+    <button type="submit" class="form-submit t">{spans('submit')}</button>
+  </form>
+</div>
+"""
+    return _page_shell(title_line, chrome, body)
+
+
+def build_contact_page(config: dict, chrome: dict) -> None:
+    page_path = ROOT / "contact.html"
+    page_path.write_text(render_contact_page(config, chrome), encoding="utf-8")
+    print(f"wrote {page_path}")
 
 
 def main():
@@ -1074,9 +1243,13 @@ def main():
     # see validate_track2_terms()'s docstring.
     validate_track2_terms(products)
 
-    # Legal pages first, fail fast -- see build_legal_pages()'s docstring
-    # for why this is a hard failure (unlike food_info below).
-    build_legal_pages(config)
+    # Legal + contact pages first, fail fast -- see build_legal_pages()'s
+    # docstring for why a missing legal-text source is a hard failure
+    # (unlike food_info below). Chrome (header/footer/cart-drawer/JS) is
+    # extracted from index.html once and reused for every one of them.
+    chrome = extract_chrome_blocks()
+    build_legal_pages(config, chrome)
+    build_contact_page(config, chrome)
 
     # Single-source policy (Segment P1) -- warn (or block, per config) on
     # live SKUs with fewer than 2 suppliers at stage >= quoted.

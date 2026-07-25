@@ -6,16 +6,139 @@
 <title>ORIGO — Privatumo politika | Privacy Policy | Polityka prywatności</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
-<style>
-:root{--ink:#1a1a1a;--cream:#f5f0e8;--olive:#3d5a3e;--olive-l:#5a7c5b;--gold:#b8860b;--warm:#f9f5ee;--muted:#6b6560;--border:#d9d2c4;--white:#ffffff}
+<style>:root {
+  --ink:     #1a1a1a;
+  --cream:   #f5f0e8;
+  --parchm:  #ede7d9;
+  --olive:   #3d5a3e;
+  --olive-l: #5a7c5b;
+  --gold:    #b8860b;
+  --gold-l:  #d4a017;
+  --rust:    #8b3a2a;
+  --warm:    #f9f5ee;
+  --muted:   #6b6560;
+  --border:  #d9d2c4;
+  --white:   #ffffff;
+  --shadow:  0 4px 24px rgba(26,26,26,.08);
+  --shadow-h:0 8px 40px rgba(26,26,26,.15);
+  --r:       6px;
+  --trans:   all .3s cubic-bezier(.4,0,.2,1);
+}
 *{margin:0;padding:0;box-sizing:border-box}
-body{font-family:'DM Sans',sans-serif;background:var(--warm);color:var(--ink);line-height:1.7;font-size:16px}
+body{font-family:'DM Sans',sans-serif;background:var(--warm);color:var(--ink);line-height:1.6;font-size:16px}
+/* ── LANGUAGE SWITCHER ── */
 .lang-bar{background:var(--olive);padding:6px 0;text-align:center}
-.lang-bar a{color:rgba(255,255,255,.6);text-decoration:none;font-size:12px;letter-spacing:.1em;text-transform:uppercase;margin:0 10px}
-.lang-bar a.active{color:#fff;font-weight:500;text-decoration:underline;text-underline-offset:3px}
-header{background:var(--cream);border-bottom:1px solid var(--border);padding:20px 24px}
-header a{font-family:'Cormorant Garamond',serif;font-size:26px;color:var(--olive);text-decoration:none;letter-spacing:.1em}
+.lang-bar a{color:rgba(255,255,255,.6);text-decoration:none;font-size:12px;letter-spacing:.1em;text-transform:uppercase;margin:0 10px;transition:var(--trans)}
+.lang-bar a.active,.lang-bar a:hover{color:#fff}
+.lang-bar a.active{font-weight:500;text-decoration:underline;text-underline-offset:3px}
+/* ── HEADER ── */
+header{background:var(--cream);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100;backdrop-filter:blur(10px)}
+.header-inner{max-width:1200px;margin:0 auto;padding:0 24px;display:flex;align-items:center;justify-content:space-between;height:72px}
+.logo{display:flex;align-items:baseline;gap:8px;text-decoration:none}
+.logo-mark{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:300;letter-spacing:.15em;color:var(--olive);line-height:1}
+.logo-dot{width:6px;height:6px;background:var(--gold);border-radius:50%;margin-bottom:4px}
+.logo-sub{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted)}
+nav{display:flex;gap:32px;align-items:center}
+nav a{text-decoration:none;color:var(--ink);font-size:14px;letter-spacing:.05em;transition:var(--trans);position:relative}
+nav a::after{content:'';position:absolute;bottom:-4px;left:0;width:0;height:1px;background:var(--gold);transition:var(--trans)}
+nav a:hover::after{width:100%}
+nav a:hover{color:var(--olive)}
+.nav-cta{background:var(--olive);color:#fff!important;padding:10px 22px;border-radius:var(--r);font-size:13px;letter-spacing:.08em}
+.nav-cta::after{display:none!important}
+.nav-cta:hover{background:var(--olive-l)!important;color:#fff!important}
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:4px}
+.hamburger span{width:24px;height:2px;background:var(--ink);transition:var(--trans)}
+/* ── CART BUTTON / BADGE ── */
+.cart-btn{position:relative;background:none;border:none;cursor:pointer;font-size:20px;padding:6px;color:var(--ink);display:flex;align-items:center}
+.cart-badge{position:absolute;top:-2px;right:-2px;background:var(--gold);color:var(--ink);font-size:10px;font-weight:700;min-width:16px;height:16px;border-radius:8px;display:flex;align-items:center;justify-content:center;padding:0 4px}
+.cart-badge.hidden{display:none}
+
+/* ── CART DRAWER ── */
+.cart-overlay{position:fixed;inset:0;background:rgba(26,26,26,.4);z-index:200;opacity:0;pointer-events:none;transition:opacity .3s ease}
+.cart-overlay.open{opacity:1;pointer-events:auto}
+.cart-drawer{position:fixed;top:0;right:0;height:100%;width:380px;max-width:92vw;background:var(--white);z-index:201;box-shadow:var(--shadow-h);transform:translateX(100%);transition:transform .3s cubic-bezier(.4,0,.2,1);display:flex;flex-direction:column}
+.cart-drawer.open{transform:translateX(0)}
+.cart-drawer-head{display:flex;align-items:center;justify-content:space-between;padding:20px 24px;border-bottom:1px solid var(--border)}
+.cart-drawer-title{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:400}
+.cart-drawer-close{background:none;border:none;font-size:22px;cursor:pointer;color:var(--muted);line-height:1;padding:0 4px}
+.cart-drawer-body{flex:1;overflow-y:auto;padding:0 24px}
+.cart-empty{color:var(--muted);font-size:13px;text-align:center;padding:48px 0}
+.cart-item{display:flex;gap:12px;padding:14px 0;border-bottom:1px solid var(--border)}
+.cart-item-img{width:56px;height:56px;border-radius:8px;overflow:hidden;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:28px;background:var(--cream)}
+.cart-item-img img{width:100%;height:100%;object-fit:cover}
+.cart-item-body{flex:1;min-width:0}
+.cart-item-name{font-size:13.5px;font-weight:500;margin-bottom:4px;line-height:1.3}
+.cart-item-price{font-size:12px;color:var(--muted)}
+.cart-item-row{display:flex;align-items:center;justify-content:space-between;margin-top:8px}
+.qty-stepper{display:flex;align-items:center;border:1px solid var(--border);border-radius:var(--r);overflow:hidden}
+.qty-stepper button{background:var(--cream);border:none;width:24px;height:24px;font-size:13px;cursor:pointer;color:var(--ink);font-family:inherit}
+.qty-stepper button:hover{background:var(--border)}
+.qty-stepper span{width:28px;text-align:center;font-size:12.5px}
+.cart-item-remove{background:none;border:none;color:var(--rust);font-size:11px;cursor:pointer;text-decoration:underline;padding:0;font-family:'DM Sans',sans-serif}
+.cart-drawer-footer{padding:20px 24px;border-top:1px solid var(--border)}
+.cart-subtotal-row{display:flex;justify-content:space-between;font-size:15px;font-weight:600;color:var(--olive);margin-bottom:14px}
+.cart-checkout-btn{width:100%;text-align:center}
+.order-form{background:var(--white);border-radius:12px;padding:36px;box-shadow:var(--shadow)}
+.form-title{font-family:'Cormorant Garamond',serif;font-size:26px;margin-bottom:24px;font-weight:400}
+.form-group{margin-bottom:20px}
+.form-group label{display:block;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+.form-group input,.form-group select,.form-group textarea{width:100%;padding:12px 16px;border:1px solid var(--border);border-radius:var(--r);font-family:'DM Sans',sans-serif;font-size:14px;color:var(--ink);background:var(--warm);transition:var(--trans);outline:none}
+.form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:var(--olive);background:#fff}
+.form-group textarea{height:100px;resize:vertical}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.form-consent{margin-bottom:12px}
+.consent-label{display:flex;align-items:flex-start;gap:8px;font-size:12.5px;color:var(--muted);cursor:pointer;text-transform:none;letter-spacing:normal}
+.consent-label input{width:auto;margin-top:2px;flex-shrink:0}
+.consent-label a{color:var(--olive)}
+.form-submit{width:100%;padding:16px;background:var(--olive);color:#fff;border:none;border-radius:var(--r);font-size:13px;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;transition:var(--trans);font-family:'DM Sans',sans-serif;font-weight:500;margin-top:8px}
+.form-submit:hover{background:var(--olive-l);transform:translateY(-1px)}
+.form-note{font-size:11px;color:var(--muted);text-align:center;margin-top:12px;line-height:1.6}
+/* ── FOOTER ── */
+footer{background:var(--ink);color:rgba(255,255,255,.6);padding:48px 24px 24px}
+.footer-inner{max-width:1200px;margin:0 auto}
+.footer-top{display:grid;grid-template-columns:1fr 2fr;gap:48px;margin-bottom:40px}
+.footer-brand .logo-mark{color:rgba(255,255,255,.9)}
+.footer-brand p{font-size:13px;margin-top:12px;line-height:1.7;color:rgba(255,255,255,.45)}
+.footer-signature{margin-top:16px;padding-top:14px;border-top:1px solid rgba(255,255,255,.08);font-size:11.5px;line-height:1.9;color:rgba(255,255,255,.35)}
+.footer-signature p{margin:0;font-size:inherit;color:inherit}
+.footer-signature a{color:inherit;text-decoration:none}
+.footer-signature a:hover{color:rgba(255,255,255,.6)}
+.footer-links{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.footer-col h4{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.3);margin-bottom:16px}
+.footer-col a{display:block;font-size:13px;color:rgba(255,255,255,.55);text-decoration:none;margin-bottom:8px;transition:var(--trans)}
+.footer-col a:hover{color:#fff}
+.footer-bottom{display:flex;justify-content:space-between;align-items:center;padding-top:24px;border-top:1px solid rgba(255,255,255,.08);font-size:12px;flex-wrap:wrap;gap:12px}
+/* ── TOAST ── */
+.toast{position:fixed;bottom:24px;right:24px;background:var(--olive);color:#fff;padding:14px 24px;border-radius:var(--r);font-size:14px;transform:translateY(80px);opacity:0;transition:var(--trans);z-index:999;box-shadow:var(--shadow-h)}
+.toast.show{transform:translateY(0);opacity:1}
+/* ── LANGUAGE VISIBILITY ── */
+[data-lang]{display:none}
+body.lt [data-lang="lt"]{display:block}
+body.lt span[data-lang="lt"]{display:inline}
+body.lt [data-lang="lt"].flex{display:flex}
+body.en [data-lang="en"]{display:block}
+body.en span[data-lang="en"]{display:inline}
+body.en [data-lang="en"].flex{display:flex}
+body.pl [data-lang="pl"]{display:block}
+body.pl span[data-lang="pl"]{display:inline}
+body.pl [data-lang="pl"].flex{display:flex}
+
+/* Inline lang variants */
+.t span[data-lang]{display:none}
+body.lt .t span[data-lang="lt"],
+body.en .t span[data-lang="en"],
+body.pl .t span[data-lang="pl"]{display:inline}
+
+@media(max-width:768px){
+  nav{display:none}nav.open{display:flex;flex-direction:column;position:absolute;top:72px;left:0;right:0;background:var(--cream);padding:24px;border-bottom:1px solid var(--border);gap:20px}
+  .hamburger{display:flex}
+  .footer-links{grid-template-columns:1fr 1fr}
+  .form-row{grid-template-columns:1fr}
+  .cart-drawer{width:100%;max-width:100vw}
+}
+
 .wrap{max-width:760px;margin:0 auto;padding:48px 24px 80px}
+.page-eyebrow{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:8px}
 h1{font-family:'Cormorant Garamond',serif;font-size:clamp(32px,5vw,44px);font-weight:400;margin-bottom:8px}
 h2{font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:600;margin:36px 0 12px;color:var(--olive)}
 h3{font-size:16px;font-weight:600;margin:20px 0 8px;color:var(--olive)}
@@ -30,20 +153,56 @@ th{color:var(--olive);font-weight:600}
 .draft-notice{background:#fff4e5;border-left:3px solid var(--gold);padding:14px 18px;border-radius:6px;font-size:13px;color:#6b4f00;margin:0 0 24px;font-weight:600}
 .form-box{background:var(--white);border:1px solid var(--border);border-radius:10px;padding:20px 24px;margin-top:16px}
 .form-box p{font-size:13.5px;margin-bottom:10px}
-footer{text-align:center;padding:32px 24px;font-size:12px;color:var(--muted);border-top:1px solid var(--border)}
-[data-lang]{display:none}
-body.lt [data-lang="lt"]{display:block}
-body.en [data-lang="en"]{display:block}
-body.pl [data-lang="pl"]{display:block}
 </style>
 </head>
 <body class="lt">
+<!-- LANGUAGE BAR -->
 <div class="lang-bar">
-  <a href="#" onclick="setLang('lt');return false" id="lang-lt" class="active">LT</a>
-  <a href="#" onclick="setLang('en');return false" id="lang-en">EN</a>
-  <a href="#" onclick="setLang('pl');return false" id="lang-pl">PL</a>
+  <a href="#" onclick="setLang('lt')" id="lang-lt" class="active">LT — Lietuvių</a>
+  <a href="#" onclick="setLang('en')" id="lang-en">EN — English</a>
+  <a href="#" onclick="setLang('pl')" id="lang-pl">PL — Polski</a>
 </div>
-<header><a href="index.html">ORIGO</a></header>
+
+<!-- HEADER -->
+<header>
+  <div class="header-inner">
+    <a href="#" class="logo">
+      <span class="logo-mark">ORIGO</span>
+      <span class="logo-dot"></span>
+      <span class="logo-sub t">
+        <span data-lang="lt">Rinktiniai produktai</span>
+        <span data-lang="en">Selected products</span>
+        <span data-lang="pl">Wybrane produkty</span>
+      </span>
+    </a>
+    <nav id="main-nav">
+      <a href="index.html#products" class="t">
+        <span data-lang="lt">Produktai</span>
+        <span data-lang="en">Products</span>
+        <span data-lang="pl">Produkty</span>
+      </a>
+      <a href="company.html" class="t">
+        <span data-lang="lt">Apie mus</span>
+        <span data-lang="en">About</span>
+        <span data-lang="pl">O nas</span>
+      </a>
+      <a href="contact.html" class="t">
+        <span data-lang="lt">Kontaktai</span>
+        <span data-lang="en">Contact</span>
+        <span data-lang="pl">Kontakt</span>
+      </a>
+      <a href="index.html#contact" class="nav-cta t">
+        <span data-lang="lt">Užsakyti</span>
+        <span data-lang="en">Order</span>
+        <span data-lang="pl">Zamów</span>
+      </a>
+    </nav>
+    <button class="cart-btn" onclick="toggleBasket()" aria-label="Basket">
+      🛒<span class="cart-badge hidden" id="cart-badge">0</span>
+    </button>
+    <div class="hamburger" onclick="toggleMenu()"><span></span><span></span><span></span></div>
+  </div>
+</header>
 <div class="wrap">
 <div data-lang="lt"><div class="draft-notice">⚠ JUODRAŠTIS — laukiama Elijo ir buhalterio/teisininko peržiūros prieš paskelbimą. Žr. REVIEW-CHECKLIST.md (origo-ops repo).</div><h1>Privatumo politika</h1>
 <p><strong>Paskutinį kartą atnaujinta: 2026-07-22 · Juodraštis, nesuderintas su teisininku/buhalteriu.</strong></p>
@@ -104,14 +263,681 @@ body.pl [data-lang="pl"]{display:block}
 <h2>7. Pliki cookie i analityka</h2>
 <p>Ta strona <strong>nie używa</strong> plików cookie do śledzenia ani celów marketingowych. Statystyki odwiedzin zbierane są przez <strong>Umami</strong> — samodzielnie hostowane narzędzie analityczne, które ze swojej natury nie używa plików cookie i nie zbiera danych umożliwiających identyfikację osoby (adresy IP nie są przechowywane, dane są agregowane). Baner zgody na pliki cookie nie jest potrzebny, dopóki strona nie wprowadzi innych plików cookie — jeśli to się zmieni, ta polityka zostanie zaktualizowana i dodany zostanie mechanizm zgody.</p></div>
 </div>
-<footer>© 2026 ORIGO / iieik.eu · <a href="index.html">iieik.eu</a></footer>
+<!-- CART DRAWER -->
+<div class="cart-overlay" id="cart-overlay" onclick="closeBasket()"></div>
+<div class="cart-drawer" id="cart-drawer">
+  <div class="cart-drawer-head">
+    <div class="cart-drawer-title t"><span data-lang="lt">Krepšelis</span><span data-lang="en">Basket</span><span data-lang="pl">Koszyk</span></div>
+    <button class="cart-drawer-close" onclick="closeBasket()" aria-label="Close">×</button>
+  </div>
+  <div class="cart-drawer-body" id="cart-drawer-body"></div>
+  <div class="cart-drawer-footer" id="cart-drawer-footer"></div>
+</div>
+
+<div class="toast" id="toast"></div>
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="logo-mark">ORIGO</div>
+        <p class="t"><span data-lang="lt">Rinktiniai produktai iš Europos. Vilnius, Lietuva.</span><span data-lang="en">Selected products from Europe. Vilnius, Lithuania.</span><span data-lang="pl">Wybrane produkty z Europy. Wilno, Litwa.</span></p>
+        <div class="footer-signature">
+          <p>IĮ &quot;Eksportas, importas ir konsultacija&quot;</p>
+          <p class="t"><span data-lang="lt">Anykščių r., Lietuva, LT-29240 · Įm. kodas 304174019</span><span data-lang="en">Anykščių r., Lithuania, LT-29240 · Company code 304174019</span><span data-lang="pl">Anykščių r., Litwa, LT-29240 · Kod firmy 304174019</span></p>
+          <p>iieik.eu · <a href="mailto:info@iieik.eu">info@iieik.eu</a></p>
+        </div>
+      </div>
+      <div class="footer-links">
+        <div class="footer-col">
+          <h4 class="t"><span data-lang="lt">Produktai</span><span data-lang="en">Products</span><span data-lang="pl">Produkty</span></h4>
+          <a href="index.html#products" class="t"><span data-lang="lt">Maistas</span><span data-lang="en">Food</span><span data-lang="pl">Żywność</span></a>
+          <a href="index.html#products" class="t"><span data-lang="lt">Virtuvė</span><span data-lang="en">Cookware</span><span data-lang="pl">Naczynia</span></a>
+          <a href="index.html#products" class="t"><span data-lang="lt">Technologijos</span><span data-lang="en">Technology</span><span data-lang="pl">Technologia</span></a>
+          <a href="index.html#products" class="t"><span data-lang="lt">Sveikata</span><span data-lang="en">Health</span><span data-lang="pl">Zdrowie</span></a>
+        </div>
+        <div class="footer-col">
+          <h4 class="t"><span data-lang="lt">Informacija</span><span data-lang="en">Information</span><span data-lang="pl">Informacje</span></h4>
+          <a href="company.html" class="t"><span data-lang="lt">Apie mus</span><span data-lang="en">About us</span><span data-lang="pl">O nas</span></a>
+          <a href="contact.html" class="t"><span data-lang="lt">Kontaktai</span><span data-lang="en">Contact</span><span data-lang="pl">Kontakt</span></a>
+          <a href="index.html#contact" class="t"><span data-lang="lt">Pristatymas</span><span data-lang="en">Delivery</span><span data-lang="pl">Dostawa</span></a>
+          <a href="returns.html" class="t"><span data-lang="lt">Grąžinimas</span><span data-lang="en">Returns</span><span data-lang="pl">Zwroty</span></a>
+          <a href="terms.html" class="t"><span data-lang="lt">Pirkimo–pardavimo taisyklės</span><span data-lang="en">Terms &amp; Conditions</span><span data-lang="pl">Regulamin</span></a>
+          <a href="privacy.html" class="t"><span data-lang="lt">Privatumo politika</span><span data-lang="en">Privacy Policy</span><span data-lang="pl">Polityka prywatności</span></a>
+          <a href="mailto:info@iieik.eu">info@iieik.eu</a>
+        </div>
+        <div class="footer-col">
+          <h4 class="t"><span data-lang="lt">Raskite mus</span><span data-lang="en">Find us on</span><span data-lang="pl">Znajdź nas na</span></h4>
+          <a href="#">kaina.lt</a>
+          <a href="#">kainos.lt</a>
+          <a href="#">pigu.lt</a>
+          <a href="#">skelbimai.lt</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2025 ORIGO / iieik.eu · <span class="t"><span data-lang="lt">Visos teisės saugomos</span><span data-lang="en">All rights reserved</span><span data-lang="pl">Wszelkie prawa zastrzeżone</span></span></span>
+      <span class="t"><span data-lang="lt">Vilnius, Lietuva</span><span data-lang="en">Vilnius, Lithuania</span><span data-lang="pl">Wilno, Litwa</span></span>
+    </div>
+  </div>
+</footer>
 <script>
-function setLang(lang){
+// ── DATA ──────────────────────────────────────────────────────────────────
+const LANG = { lt:0, en:1, pl:2 };
+let currentLang = 'lt';
+
+// This same script is reused verbatim on every generated page (build.py's
+// extract_chrome_blocks()) -- the order form/checkout section only exists
+// on index.html itself, so the cart drawer's checkout link must point back
+// there (as an anchor) when rendered from any other page.
+const ON_INDEX_PAGE = /(^|\/)(index\.html)?$/.test(location.pathname);
+const CHECKOUT_ANCHOR = ON_INDEX_PAGE ? '#contact' : 'index.html#contact';
+
+// Product data is fetched from products.json (generated by build.py from
+// products.yaml -- the single source of truth) rather than hardcoded here.
+// `products` stays empty until loadProducts() resolves; renderProducts()
+// is only called once real data (or the offline fallback) is ready.
+let products = [];
+let catalogOffline = false;
+// config/shipping.yaml, passed through products.json's "shipping" key.
+// configured:false (the default until Elijo fills in real courier rates)
+// means the site shows "confirmed after order" instead of a computed
+// figure -- never a fabricated price.
+let shippingConfig = { configured: false, free_shipping_threshold_eur: null, couriers: [] };
+
+const FOOD_INFO_LABELS = {
+  lt: { toggle: 'ℹ️ Maisto informacija', ingredients: 'Sudėtis', allergens: 'Alergenai', nutrition: 'Maistinė vertė (100 g/100 ml)', nutritionExempt: 'Maisto papildams privalomos maistinės vertės deklaracijos netaikomos.', net: 'Kiekis', storage: 'Laikymo sąlygos', origin: 'Kilmės šalis', seller: 'Pardavėjas / importuotojas' },
+  en: { toggle: 'ℹ️ Food information', ingredients: 'Ingredients', allergens: 'Allergens', nutrition: 'Nutrition (per 100 g/100 ml)', nutritionExempt: 'Food supplements are exempt from the mandatory nutrition declaration.', net: 'Net quantity', storage: 'Storage conditions', origin: 'Country of origin', seller: 'Seller / importer' },
+  pl: { toggle: 'ℹ️ Informacje o żywności', ingredients: 'Składniki', allergens: 'Alergeny', nutrition: 'Wartość odżywcza (na 100 g/100 ml)', nutritionExempt: 'Suplementy diety są zwolnione z obowiązkowej deklaracji wartości odżywczej.', net: 'Ilość netto', storage: 'Warunki przechowywania', origin: 'Kraj pochodzenia', seller: 'Sprzedawca / importer' },
+};
+const NUTRITION_ROW_LABELS = {
+  lt: { energy: 'Energinė vertė', fat: 'Riebalai', saturates: 'iš jų sočiosios riebalų rūgštys', carbs: 'Angliavandeniai', sugars: 'iš jų cukrūs', protein: 'Baltymai', salt: 'Druska' },
+  en: { energy: 'Energy', fat: 'Fat', saturates: 'of which saturates', carbs: 'Carbohydrate', sugars: 'of which sugars', protein: 'Protein', salt: 'Salt' },
+  pl: { energy: 'Wartość energetyczna', fat: 'Tłuszcz', saturates: 'w tym kwasy nasycone', carbs: 'Węglowodany', sugars: 'w tym cukry', protein: 'Białko', salt: 'Sól' },
+};
+const TRACK2_TERMS_LABELS = {
+  lt: { withdrawal: 'Atsisakymo teisė', guarantee: 'Garantija' },
+  en: { withdrawal: 'Withdrawal right', guarantee: 'Guarantee' },
+  pl: { withdrawal: 'Prawo do odstąpienia', guarantee: 'Gwarancja' },
+};
+const SHIPPING_LABELS = {
+  lt: { pick: '— Pasirinkite —', subtotal: 'Prekės', shipping: 'Pristatymas', total: 'Viso', pending: 'Pristatymo kaina bus patvirtinta patvirtinus užsakymą.', free: 'Nemokamas' },
+  en: { pick: '— Select —', subtotal: 'Items', shipping: 'Shipping', total: 'Total', pending: 'Shipping cost will be confirmed once the order is confirmed.', free: 'Free' },
+  pl: { pick: '— Wybierz —', subtotal: 'Produkty', shipping: 'Dostawa', total: 'Razem', pending: 'Koszt dostawy zostanie potwierdzony po potwierdzeniu zamówienia.', free: 'Bezpłatna' },
+};
+
+const whyItems = [
+  { icon:'🔍', title:['Asmeniškai patikrinta','Personally tested','Osobiście przetestowane'],
+    text:['Kiekvieną produktą pats naudojame prieš siūlydami. Jokių staigmenų.','We use every product ourselves before offering it. No surprises.','Każdy produkt sami używamy zanim go zaproponujemy. Żadnych niespodzianek.'] },
+  { icon:'🇪🇺', title:['ES kilmės produktai','EU origin products','Produkty z UE'],
+    text:['Pirmaujame ES tiekėjus. Aiški kilmė, kokybiški sertifikatai.','We prioritise EU suppliers. Clear origin, quality certifications.','Priorytetowo traktujemy dostawców z UE. Jasne pochodzenie, certyfikaty jakości.'] },
+  { icon:'📦', title:['Greitas pristatymas','Fast delivery','Szybka dostawa'],
+    text:['Dauguma produktų sandėlyje Vilniuje — pristatome per 1–3 d. LP Express / Omniva.','Most products in stock in Vilnius — delivered in 1–3 days via LP Express / Omniva.','Większość produktów w magazynie w Wilnie — dostawa w 1–3 dni przez LP Express / Omniva.'] },
+  { icon:'💬', title:['Atsakome per 24h','Response within 24h','Odpowiedź w 24h'],
+    text:['Kiekvienas užklausimas svarbus. Atsakome lietuviškai, angliškai ir lenkiškai.','Every inquiry matters. We respond in Lithuanian, English, and Polish.','Każde zapytanie jest ważne. Odpowiadamy po litewsku, angielsku i polsku.'] },
+];
+
+// ── LOAD PRODUCTS (from products.json, generated by build.py) ─────────────
+async function loadProducts() {
+  try {
+    const res = await fetch('products.json', {cache: 'no-store'});
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const data = await res.json();
+    if (!Array.isArray(data.products)) throw new Error('malformed products.json');
+    products = data.products;
+    shippingConfig = data.shipping || shippingConfig;
+    paymentConfig = data.payment_methods || paymentConfig;
+    catalogOffline = false;
+  } catch (err) {
+    console.error('Failed to load products.json:', err);
+    products = [];
+    catalogOffline = true;
+  }
+  renderProducts();
+  renderCart();
+}
+
+// ── FOOD INFO PANEL (EU Reg 1169/2011) ─────────────────────────────────────
+function buildFoodInfoPanel(p) {
+  const fi = p.food_info;
+  if (!fi) return '';
+  const L = FOOD_INFO_LABELS[currentLang];
+  const N = NUTRITION_ROW_LABELS[currentLang];
+  const n = fi.nutrition_per_100g || {};
+  const nutritionHtml = fi.nutrition_declaration_exempt
+    ? `<p>${L.nutritionExempt}</p>`
+    : `<table class="nutrition-table">
+        <tr><td>${N.energy}</td><td>${n.energy_kj ?? ''} kJ / ${n.energy_kcal ?? ''} kcal</td></tr>
+        <tr><td>${N.fat}</td><td>${n.fat ?? ''} g</td></tr>
+        <tr><td>${N.saturates}</td><td>${n.saturates ?? ''} g</td></tr>
+        <tr><td>${N.carbs}</td><td>${n.carbs ?? ''} g</td></tr>
+        <tr><td>${N.sugars}</td><td>${n.sugars ?? ''} g</td></tr>
+        <tr><td>${N.protein}</td><td>${n.protein ?? ''} g</td></tr>
+        <tr><td>${N.salt}</td><td>${n.salt ?? ''} g</td></tr>
+      </table>`;
+  const seller = fi.seller_details || {};
+  return `
+    <div class="food-info">
+      <button type="button" class="food-info-toggle" onclick="toggleFoodInfo(this)">${L.toggle}</button>
+      <div class="food-info-body" hidden>
+        <dt>${L.ingredients}</dt><dd>${(fi.ingredients || {})[currentLang] || ''}</dd>
+        <dt>${L.allergens}</dt><dd>${(fi.allergens || {})[currentLang] || ''}</dd>
+        <dt>${L.nutrition}</dt><dd>${nutritionHtml}</dd>
+        <dt>${L.net}</dt><dd>${fi.net_quantity || ''}</dd>
+        <dt>${L.storage}</dt><dd>${(fi.storage_conditions || {})[currentLang] || ''}</dd>
+        <dt>${L.origin}</dt><dd>${(fi.origin_country || {})[currentLang] || ''}</dd>
+        <dt>${L.seller}</dt><dd>${seller.name || ''}${seller.address ? ', ' + seller.address : ''}</dd>
+      </div>
+    </div>`;
+}
+
+function toggleFoodInfo(btn) {
+  const body = btn.nextElementSibling;
+  body.hidden = !body.hidden;
+}
+
+// ── TRACK 2 (track: exclusive) WITHDRAWAL + GUARANTEE PANEL ────────────────
+// Track 2 products carry withdrawal_terms_text/guarantee_text INSTEAD OF
+// return_terms_text (see build.py's build_products_json()) -- the
+// site displays both, plus a prominent secondhand disclosure banner
+// when the unit is condition: opened-tested (2026-07-22).
+function buildTrack2TermsPanel(p) {
+  if (p.track !== 'exclusive') return '';
+  const L = TRACK2_TERMS_LABELS[currentLang];
+  const withdrawal = (p.withdrawal_terms_text || {})[currentLang];
+  const guarantee = (p.guarantee_text || {})[currentLang];
+  const disclosure = (p.secondhand_disclosure_text || {})[currentLang];
+  return `
+    ${disclosure ? `<div class="secondhand-disclosure">${disclosure}</div>` : ''}
+    <div class="track2-terms">
+      ${withdrawal ? `<div>↩ <strong>${L.withdrawal}:</strong> ${withdrawal}</div>` : ''}
+      ${guarantee ? `<div>🛡 <strong>${L.guarantee}:</strong> ${guarantee}</div>` : ''}
+    </div>`;
+}
+
+// ── RENDER PRODUCTS ───────────────────────────────────────────────────────
+function renderProducts() {
+  const grid = document.getElementById('products-grid');
+  if (!grid) return; // no product grid on legal/contact pages -- chrome JS is shared, see CHROME-* markers above
+
+  if (catalogOffline) {
+    grid.innerHTML = `
+      <div class="catalog-offline reveal">
+        <p class="t">
+          <span data-lang="lt">Katalogas laikinai neveikia. Rašykite mums el. paštu — atsakysime per 24 val.</span>
+          <span data-lang="en">Catalog temporarily offline. Email us — we'll respond within 24h.</span>
+          <span data-lang="pl">Katalog chwilowo niedostępny. Napisz do nas e-mailem — odpowiemy w ciągu 24h.</span>
+        </p>
+        <p style="margin-top:12px"><a href="mailto:info@iieik.eu">info@iieik.eu</a></p>
+      </div>`;
+    observeReveal();
+    return;
+  }
+
+  grid.innerHTML = products.map(p => {
+    const exclusive = p.track === 'exclusive';
+    const trackClass = exclusive ? 't2' : 't1';
+    const trackLabel = exclusive ? 'Track 2' : 'Track 1';
+    const media = (p.photos && p.photos.length)
+      ? `<img src="photos/${p.sku}/${p.photos[0]}" alt="${p.name[currentLang]}" style="width:100%;height:100%;object-fit:cover">`
+      : `<span style="font-size:56px">${p.icon || ''}</span>`;
+    return `
+    <div class="product-card reveal">
+      <div class="product-img ${p.category || ''}">
+        <span class="track-badge ${trackClass}">${trackLabel}</span>
+        ${exclusive ? '<span class="exclusive-badge">EXCLUSIVE</span>' : ''}
+        ${media}
+      </div>
+      <div class="product-body">
+        <div class="product-name">${p.name[currentLang]}</div>
+        ${p.origin ? `<div class="product-origin">📍 ${p.origin[currentLang]}</div>` : ''}
+        <span class="stock-badge ${p.in_stock ? 'in' : 'out'}">${
+          p.in_stock
+            ? (currentLang==='lt'?'Yra sandėlyje':currentLang==='en'?'In stock':'Dostępne')
+            : (currentLang==='lt'?'Užsakoma iš tiekėjo':currentLang==='en'?'Order from supplier':'Zamówienie u dostawcy')
+        }</span>
+        <div class="product-desc">${p.desc[currentLang]}</div>
+        ${buildFoodInfoPanel(p)}
+        ${p.seal_notice_text ? `<div class="seal-notice-line">${p.seal_notice_text[currentLang] || ''}</div>` : ''}
+        ${p.return_terms_text ? `<div class="return-terms-line">↩ ${p.return_terms_text[currentLang] || ''}</div>` : ''}
+        ${buildTrack2TermsPanel(p)}
+        <div class="product-footer">
+          <div>
+            <div class="product-price">€${p.price_eur.toFixed(2)}</div>
+            ${p.delivery_estimate ? `<div class="product-delivery">🚚 ${p.delivery_estimate[currentLang]}</div>` : ''}
+          </div>
+          <button type="button" class="btn-order" onclick="addToBasket('${p.sku}')">
+            ${ currentLang==='lt' ? 'Į krepšelį' : currentLang==='en' ? 'Add to basket' : 'Do koszyka' }
+          </button>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+  populateCourierSelect();
+  observeReveal();
+}
+
+// ── SHIPPING / ORDER TOTAL ──────────────────────────────────────────────────
+function populateCourierSelect() {
+  const sel = document.getElementById('f-courier');
+  if (!sel) return;
+  const couriers = shippingConfig.couriers || [];
+  const prevValue = sel.value;
+  sel.innerHTML = couriers.map(c => `<option value="${c.name}">${c.name}</option>`).join('');
+  if (couriers.some(c => c.name === prevValue)) sel.value = prevValue;
+}
+
+// items: [{product, qty}] (resolvedBasketItems() shape) -- an estimate only,
+// same posture as before: origo-order-intake.py always recomputes the real
+// charge server-side from the courier + weight, never trusting this figure.
+function computeShippingForCourier(courierName, items) {
+  if (!shippingConfig.configured) return null; // not yet configured -- show "confirmed after order" instead
+  if (!items.length) return null;
+  const threshold = shippingConfig.free_shipping_threshold_eur;
+  const subtotal = items.reduce((s, i) => s + i.product.price_eur * i.qty, 0);
+  if (threshold != null && subtotal >= threshold) return 0;
+  const courier = (shippingConfig.couriers || []).find(c => c.name === courierName);
+  if (!courier) return null;
+  let totalGrams = 0;
+  for (const i of items) {
+    if (i.product.weight_grams == null) return null;
+    totalGrams += i.product.weight_grams * i.qty;
+  }
+  const brackets = [...(courier.weight_brackets || [])].sort((a, b) => a.max_grams - b.max_grams);
+  const match = brackets.find(b => totalGrams <= b.max_grams);
+  return match ? match.price_eur : (brackets.length ? brackets[brackets.length - 1].price_eur : null);
+}
+
+// ── CHECKOUT (basket-driven) ────────────────────────────────────────────
+const PAYMENT_LABELS = {
+  lt: { bank:'Banko pavedimas (SEPA)', bankNote:'Apmokėjimo duomenis atsiųsime el. paštu patvirtinus užsakymą.', gateway:'Mokėjimas kortele / internetu', soon:'Netrukus' },
+  en: { bank:'Bank transfer (SEPA)', bankNote:'Payment details sent by email once your order is confirmed.', gateway:'Card / online payment', soon:'Coming soon' },
+  pl: { bank:'Przelew bankowy (SEPA)', bankNote:'Dane do płatności wyślemy e-mailem po potwierdzeniu zamówienia.', gateway:'Płatność kartą / online', soon:'Wkrótce' },
+};
+
+function renderPaymentOptions() {
+  const box = document.getElementById('payment-options');
+  if (!box) return;
+  const L = PAYMENT_LABELS[currentLang];
+  const gatewayEnabled = !!(paymentConfig.gateway && paymentConfig.gateway.enabled);
+  const wasGatewayChecked = box.querySelector('input[value="online_gateway"]')?.checked;
+  box.innerHTML = `
+    <label class="payment-option">
+      <input type="radio" name="f-payment" value="bank_transfer" ${(!gatewayEnabled || !wasGatewayChecked) ? 'checked' : ''}>
+      <span><span class="payment-option-label">${L.bank}</span><span class="payment-option-note">${L.bankNote}</span></span>
+    </label>
+    <label class="payment-option${gatewayEnabled ? '' : ' disabled'}">
+      <input type="radio" name="f-payment" value="online_gateway" ${gatewayEnabled ? '' : 'disabled'} ${gatewayEnabled && wasGatewayChecked ? 'checked' : ''}>
+      <span><span class="payment-option-label">${L.gateway}</span>${gatewayEnabled ? '' : `<span class="payment-option-note">${L.soon}</span>`}</span>
+    </label>`;
+}
+
+// Rebuilds the checkout section (item summary, shipping estimate, submit
+// enabled/disabled) from the current basket -- called by renderCart()
+// after every add/remove/qty change, and directly on courier change.
+function renderCheckout() {
+  const B = BASKET_LABELS[currentLang];
+  const S = SHIPPING_LABELS[currentLang];
+  const summaryBox = document.getElementById('checkout-items');
+  const shippingBox = document.getElementById('shipping-summary');
+  const submitBtn = document.getElementById('checkout-submit');
+  if (!summaryBox || !shippingBox) return;
+
+  renderPaymentOptions();
+
+  const items = resolvedBasketItems();
+  if (!items.length) {
+    summaryBox.innerHTML = `<div class="checkout-empty">${B.emptyCheckout}</div>`;
+    shippingBox.innerHTML = '';
+    if (submitBtn) submitBtn.disabled = true;
+    return;
+  }
+  if (submitBtn) submitBtn.disabled = false;
+
+  summaryBox.innerHTML = items.map(i => `
+    <div class="checkout-item-row">
+      <span class="checkout-item-name">${i.product.name[currentLang]} × ${i.qty}</span>
+      <span class="checkout-item-price">€${(i.product.price_eur * i.qty).toFixed(2)}</span>
+    </div>`).join('');
+
+  const courierSel = document.getElementById('f-courier');
+  const courierName = courierSel ? courierSel.value : '';
+  const subtotal = items.reduce((s, i) => s + i.product.price_eur * i.qty, 0);
+  const shippingCost = computeShippingForCourier(courierName, items);
+  const shippingHtml = shippingCost == null
+    ? `<div class="shipping-note">${S.pending}</div>`
+    : `<div class="shipping-row"><span>${S.shipping}</span><span>${shippingCost === 0 ? S.free : '€' + shippingCost.toFixed(2)}</span></div>
+       <div class="shipping-row total"><span>${S.total}</span><span>€${(subtotal + shippingCost).toFixed(2)}</span></div>`;
+  shippingBox.innerHTML = `
+    <div class="shipping-row"><span>${S.subtotal}</span><span>€${subtotal.toFixed(2)}</span></div>
+    ${shippingHtml}`;
+}
+
+function renderWhy() {
+  const grid = document.getElementById('why-grid');
+  if (!grid) return; // no why-grid on legal/contact pages -- chrome JS is shared, see CHROME-* markers above
+  const L = LANG[currentLang];
+  grid.innerHTML = whyItems.map(w => `
+    <div class="why-item reveal">
+      <div class="why-icon">${w.icon}</div>
+      <h3 class="why-title">${w.title[L]}</h3>
+      <p class="why-text">${w.text[L]}</p>
+    </div>`).join('');
+  observeReveal();
+}
+
+function renderMarquee() {
+  const el = document.getElementById('marquee-content');
+  if (!el) return; // no marquee on legal/contact pages -- chrome JS is shared, see CHROME-* markers above
+  const items = ['EVOO · Extra Virgin Olive Oil','Specialty Coffee · Kava','Cast Iron · Ketaus Indai','Pink Salt · Himalajų Druska','TerraMaster NAS','Epson EcoTank','Cod Liver Oil · Menkių Aliejus'];
+  const full = [...items,...items,...items,...items];
+  el.innerHTML = full.map(i => `<span>${i}</span>`).join('');
+}
+
+// ── BASKET ────────────────────────────────────────────────────────────────
+// Client-side only -- localStorage-backed. Entries are {sku, qty}; resolved
+// against the live `products` array at render time (never stores name/price
+// itself, so a catalog price change or a delisted SKU is always reflected
+// correctly, same "never trust a stale client figure" posture as the
+// shipping-cost estimate below).
+const BASKET_KEY = 'origo-basket';
+let basket = [];
+let paymentConfig = { bank_transfer: { enabled: true }, gateway: { enabled: false, provider: null } };
+
+const BASKET_LABELS = {
+  lt: { title:'Krepšelis', empty:'Krepšelis tuščias.', remove:'Šalinti', subtotal:'Viso', checkout:'Pirkti', emptyCheckout:'Krepšelis tuščias — pasirinkite produktus aukščiau.', added:'Pridėta į krepšelį ✓' },
+  en: { title:'Basket', empty:'Your basket is empty.', remove:'Remove', subtotal:'Subtotal', checkout:'Checkout', emptyCheckout:'Your basket is empty — pick some products above.', added:'Added to basket ✓' },
+  pl: { title:'Koszyk', empty:'Koszyk jest pusty.', remove:'Usuń', subtotal:'Razem', checkout:'Zamów', emptyCheckout:'Koszyk jest pusty — wybierz produkty powyżej.', added:'Dodano do koszyka ✓' },
+};
+
+function loadBasket() {
+  try {
+    const raw = localStorage.getItem(BASKET_KEY);
+    basket = raw ? JSON.parse(raw) : [];
+    if (!Array.isArray(basket)) basket = [];
+  } catch { basket = []; }
+}
+function saveBasket() { localStorage.setItem(BASKET_KEY, JSON.stringify(basket)); }
+
+// Joins basket entries against the live catalog, silently dropping any sku
+// no longer in products.json (e.g. delisted since it was added to the
+// basket) rather than showing a broken row.
+function resolvedBasketItems() {
+  return basket
+    .map(entry => {
+      const product = products.find(p => p.sku === entry.sku);
+      return product ? { product, qty: entry.qty } : null;
+    })
+    .filter(Boolean);
+}
+
+function basketCount() {
+  return basket.reduce((s, e) => s + e.qty, 0);
+}
+
+function addToBasket(sku, qty = 1) {
+  const product = products.find(p => p.sku === sku);
+  if (!product) return;
+  const existing = basket.find(e => e.sku === sku);
+  if (existing) {
+    existing.qty = Math.min(existing.qty + qty, 500); // matches origo_common.py's insane_quantity ceiling
+  } else {
+    basket.push({ sku, qty: Math.min(qty, 500) });
+  }
+  saveBasket();
+  renderCart();
+  showToast({ lt: BASKET_LABELS.lt.added, en: BASKET_LABELS.en.added, pl: BASKET_LABELS.pl.added });
+}
+
+function setBasketQty(sku, qty) {
+  const entry = basket.find(e => e.sku === sku);
+  if (!entry) return;
+  if (qty <= 0) { removeFromBasket(sku); return; }
+  entry.qty = Math.min(qty, 500);
+  saveBasket();
+  renderCart();
+}
+
+function removeFromBasket(sku) {
+  basket = basket.filter(e => e.sku !== sku);
+  saveBasket();
+  renderCart();
+}
+
+function clearBasket() {
+  basket = [];
+  saveBasket();
+  renderCart();
+}
+
+function cartItemRowHtml(item) {
+  const B = BASKET_LABELS[currentLang];
+  const p = item.product;
+  const media = (p.photos && p.photos.length)
+    ? `<img src="photos/${p.sku}/${p.photos[0]}" alt="${p.name[currentLang]}">`
+    : `<span>${p.icon || ''}</span>`;
+  return `
+    <div class="cart-item">
+      <div class="cart-item-img">${media}</div>
+      <div class="cart-item-body">
+        <div class="cart-item-name">${p.name[currentLang]}</div>
+        <div class="cart-item-price">€${p.price_eur.toFixed(2)}</div>
+        <div class="cart-item-row">
+          <div class="qty-stepper">
+            <button type="button" onclick="setBasketQty('${p.sku}', ${item.qty - 1})" aria-label="-">−</button>
+            <span>${item.qty}</span>
+            <button type="button" onclick="setBasketQty('${p.sku}', ${item.qty + 1})" aria-label="+">+</button>
+          </div>
+          <button type="button" class="cart-item-remove" onclick="removeFromBasket('${p.sku}')">${B.remove}</button>
+        </div>
+      </div>
+    </div>`;
+}
+
+function renderCartDrawer() {
+  const B = BASKET_LABELS[currentLang];
+  const body = document.getElementById('cart-drawer-body');
+  const footer = document.getElementById('cart-drawer-footer');
+  if (!body || !footer) return;
+  const items = resolvedBasketItems();
+  if (!items.length) {
+    body.innerHTML = `<div class="cart-empty">${B.empty}</div>`;
+    footer.innerHTML = '';
+    return;
+  }
+  body.innerHTML = items.map(i => cartItemRowHtml(i)).join('');
+  const subtotal = items.reduce((s, i) => s + i.product.price_eur * i.qty, 0);
+  footer.innerHTML = `
+    <div class="cart-subtotal-row"><span>${B.subtotal}</span><span>€${subtotal.toFixed(2)}</span></div>
+    <a href="${CHECKOUT_ANCHOR}" class="btn btn-primary cart-checkout-btn" onclick="closeBasket()">${B.checkout}</a>`;
+}
+
+function updateCartBadge() {
+  const badge = document.getElementById('cart-badge');
+  if (!badge) return;
+  const count = basketCount();
+  badge.textContent = count;
+  badge.classList.toggle('hidden', count === 0);
+}
+
+// Re-renders every basket-dependent view: header badge, drawer, and (once
+// segment 2 defines it) the checkout section's summary/shipping/payment.
+function renderCart() {
+  updateCartBadge();
+  renderCartDrawer();
+  if (typeof renderCheckout === 'function') renderCheckout();
+}
+
+function openBasket() {
+  document.getElementById('cart-overlay').classList.add('open');
+  document.getElementById('cart-drawer').classList.add('open');
+}
+function closeBasket() {
+  document.getElementById('cart-overlay').classList.remove('open');
+  document.getElementById('cart-drawer').classList.remove('open');
+}
+function toggleBasket() {
+  document.getElementById('cart-drawer').classList.contains('open') ? closeBasket() : openBasket();
+}
+
+// ── LANGUAGE ──────────────────────────────────────────────────────────────
+function setLang(lang) {
   document.body.className = lang;
-  ['lt','en','pl'].forEach(l => document.getElementById('lang-'+l).className = l===lang ? 'active' : '');
+  currentLang = lang;
+  document.getElementById('lang-lt').className = lang==='lt' ? 'active' : '';
+  document.getElementById('lang-en').className = lang==='en' ? 'active' : '';
+  document.getElementById('lang-pl').className = lang==='pl' ? 'active' : '';
+  document.documentElement.lang = lang;
+  renderProducts();
+  renderWhy();
+  renderCart();
   localStorage.setItem('origo-lang', lang);
 }
-document.addEventListener('DOMContentLoaded', () => setLang(localStorage.getItem('origo-lang') || 'lt'));
+
+// ── FORM ──────────────────────────────────────────────────────────────────
+const ORDER_ENDPOINT = 'https://orders.iieik.eu/webhook/origo-order';
+
+function showToast(msgs) {
+  const toast = document.getElementById('toast');
+  toast.textContent = msgs[currentLang];
+  toast.classList.add('show');
+  setTimeout(() => toast.classList.remove('show'), 5000);
+}
+
+async function submitForm(e) {
+  e.preventDefault();
+
+  const items = resolvedBasketItems();
+  if (!items.length) return; // submit is disabled in this state (renderCheckout()); guard anyway
+
+  const cityCountry = document.getElementById('f-city').value.trim();
+  // "Vilnius, LT" -> city="Vilnius", country="LT"; falls back to the whole
+  // string as city + default LT if no comma-separated country code given.
+  const cityParts = cityCountry.split(',').map(s => s.trim());
+  const country = (cityParts.length > 1 && cityParts[1].length === 2) ? cityParts[1].toUpperCase() : 'LT';
+  const city = cityParts[0] || '';
+  const paymentMethod = (document.querySelector('input[name="f-payment"]:checked') || {}).value || 'bank_transfer';
+
+  const payload = {
+    token: document.getElementById('f-token').value,
+    honeypot: document.getElementById('f-company').value,
+    source: 'website',
+    customer: {
+      name: document.getElementById('f-name').value.trim(),
+      email: document.getElementById('f-email').value.trim(),
+      phone: document.getElementById('f-phone').value.trim(),
+      lang: currentLang, // which language the confirmation/legal-text email is sent in
+      address: { street: '', city, postal_code: '', country },
+    },
+    items: items.map(i => ({ sku: i.product.sku, name: i.product.name[currentLang], qty: i.qty, unit_price: i.product.price_eur })),
+    // cost is never sent -- origo-order-intake.py recomputes it server-side
+    // from the courier + weight, the client's estimate is display-only.
+    shipping: { courier: document.getElementById('f-courier').value },
+    payment_method: paymentMethod,
+    notes: document.getElementById('f-notes').value.trim(),
+    // Consent checkbox (legal completeness pass, 2026-07-22) -- the
+    // "required" attribute already blocks submission client-side, but
+    // origo-order-intake.py's validate() checks this server-side too
+    // (reason: terms_not_accepted), never trusting the client alone.
+    terms_accepted: document.getElementById('f-consent').checked,
+  };
+
+  const successMsgs = { lt:'Užsakymas išsiųstas! Atsakysime per 24 val. ✓', en:'Order sent! We will respond within 24h. ✓', pl:'Zamówienie wysłane! Odpowiemy w ciągu 24h. ✓' };
+  const failMsgs = {
+    lt: 'Nepavyko išsiųsti formos. Prašome užsakymą siųsti el. paštu: orders@iieik.eu',
+    en: 'Could not send the form. Please email your order to: orders@iieik.eu',
+    pl: 'Nie udało się wysłać formularza. Prosimy wysłać zamówienie e-mailem: orders@iieik.eu',
+  };
+
+  try {
+    const res = await fetch(ORDER_ENDPOINT, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+    });
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const data = await res.json();
+    if (!data.ok) throw new Error('server rejected order');
+    showToast(successMsgs);
+    e.target.reset();
+    clearBasket();
+  } catch (err) {
+    console.error('Order submission failed:', err);
+    showToast(failMsgs);
+  }
+}
+
+// Contact page's inquiry form (contact.html, build.py's render_contact_page())
+// -- only ever invoked via onsubmit on #contact-form, which doesn't exist on
+// this page, so this is dead code here but shared verbatim like the rest of
+// this script (see CHECKOUT_ANCHOR note above).
+const CONTACT_ENDPOINT = 'https://orders.iieik.eu/webhook/origo-contact';
+
+async function submitContactForm(e) {
+  e.preventDefault();
+
+  const payload = {
+    token: document.getElementById('c-token').value,
+    honeypot: document.getElementById('c-company').value,
+    name: document.getElementById('c-name').value.trim(),
+    email: document.getElementById('c-email').value.trim(),
+    message: document.getElementById('c-message').value.trim(),
+    lang: currentLang,
+    // Server-side check too (never trust the client alone) -- same posture
+    // as the order form's terms_accepted field.
+    consent: document.getElementById('c-consent').checked,
+  };
+
+  const successMsgs = {
+    lt: 'Žinutė išsiųsta! Atsakysime per 24 val. ✓',
+    en: 'Message sent! We will respond within 24h. ✓',
+    pl: 'Wiadomość wysłana! Odpowiemy w ciągu 24h. ✓',
+  };
+  const failMsgs = {
+    lt: 'Nepavyko išsiųsti žinutės. Rašykite mums tiesiogiai: info@iieik.eu',
+    en: 'Could not send the message. Please email us directly: info@iieik.eu',
+    pl: 'Nie udało się wysłać wiadomości. Napisz do nas bezpośrednio: info@iieik.eu',
+  };
+
+  try {
+    const res = await fetch(CONTACT_ENDPOINT, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+    });
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const data = await res.json();
+    if (!data.ok) throw new Error('server rejected inquiry');
+    showToast(successMsgs);
+    e.target.reset();
+  } catch (err) {
+    console.error('Contact submission failed:', err);
+    showToast(failMsgs);
+  }
+}
+
+// ── NAV ───────────────────────────────────────────────────────────────────
+function toggleMenu() {
+  document.getElementById('main-nav').classList.toggle('open');
+}
+
+// ── SCROLL REVEAL ─────────────────────────────────────────────────────────
+function observeReveal() {
+  const els = document.querySelectorAll('.reveal:not(.visible)');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((e,i) => { if(e.isIntersecting) { setTimeout(()=>e.target.classList.add('visible'),i*80); io.unobserve(e.target); } });
+  }, { threshold:0.08 });
+  els.forEach(el => io.observe(el));
+}
+
+// ── INIT ──────────────────────────────────────────────────────────────────
+document.addEventListener('DOMContentLoaded', () => {
+  loadBasket();
+  const saved = localStorage.getItem('origo-lang') || 'lt';
+  setLang(saved);
+  renderMarquee();
+  observeReveal();
+  loadProducts();
+});
 </script>
 </body>
 </html>

@@ -11,6 +11,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
+/* [CHROME-ROOT:START] -- extracted verbatim into build.py's LEGAL_PAGE_CSS,
+   see build.py's extract_chrome_blocks(). Keep this region self-contained
+   (no dependency on rules outside it) if you edit it. */
 :root {
   --ink:     #1a1a1a;
   --cream:   #f5f0e8;
@@ -29,16 +32,20 @@
   --r:       6px;
   --trans:   all .3s cubic-bezier(.4,0,.2,1);
 }
+/* [CHROME-ROOT:END] */
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
 body{font-family:'DM Sans',sans-serif;background:var(--warm);color:var(--ink);line-height:1.6;font-size:16px}
 
+/* [CHROME-LANGBAR:START] */
 /* ── LANGUAGE SWITCHER ── */
 .lang-bar{background:var(--olive);padding:6px 0;text-align:center}
 .lang-bar a{color:rgba(255,255,255,.6);text-decoration:none;font-size:12px;letter-spacing:.1em;text-transform:uppercase;margin:0 10px;transition:var(--trans)}
 .lang-bar a.active,.lang-bar a:hover{color:#fff}
 .lang-bar a.active{font-weight:500;text-decoration:underline;text-underline-offset:3px}
+/* [CHROME-LANGBAR:END] */
 
+/* [CHROME-HEADER:START] */
 /* ── HEADER ── */
 header{background:var(--cream);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100;backdrop-filter:blur(10px)}
 .header-inner{max-width:1200px;margin:0 auto;padding:0 24px;display:flex;align-items:center;justify-content:space-between;height:72px}
@@ -56,6 +63,7 @@ nav a:hover{color:var(--olive)}
 .nav-cta:hover{background:var(--olive-l)!important;color:#fff!important}
 .hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:4px}
 .hamburger span{width:24px;height:2px;background:var(--ink);transition:var(--trans)}
+/* [CHROME-HEADER:END] */
 
 /* ── HERO ── */
 .hero{background:linear-gradient(135deg,var(--olive) 0%,#2a3d2b 100%);padding:100px 24px;text-align:center;position:relative;overflow:hidden}
@@ -132,6 +140,7 @@ section{padding:80px 24px}
 .btn-order{background:var(--olive);color:#fff;padding:8px 18px;border-radius:var(--r);font-size:12px;letter-spacing:.06em;text-decoration:none;transition:var(--trans);font-weight:500;border:none;font-family:'DM Sans',sans-serif;cursor:pointer}
 .btn-order:hover{background:var(--olive-l)}
 
+/* [CHROME-CART:START] */
 /* ── CART BUTTON / BADGE ── */
 .cart-btn{position:relative;background:none;border:none;cursor:pointer;font-size:20px;padding:6px;color:var(--ink);display:flex;align-items:center}
 .cart-badge{position:absolute;top:-2px;right:-2px;background:var(--gold);color:var(--ink);font-size:10px;font-weight:700;min-width:16px;height:16px;border-radius:8px;display:flex;align-items:center;justify-content:center;padding:0 4px}
@@ -162,6 +171,7 @@ section{padding:80px 24px}
 .cart-drawer-footer{padding:20px 24px;border-top:1px solid var(--border)}
 .cart-subtotal-row{display:flex;justify-content:space-between;font-size:15px;font-weight:600;color:var(--olive);margin-bottom:14px}
 .cart-checkout-btn{width:100%;text-align:center}
+/* [CHROME-CART:END] */
 
 /* ── CHECKOUT ── */
 .checkout-items{margin-bottom:20px}
@@ -194,6 +204,8 @@ section{padding:80px 24px}
 .delivery-info h4{font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);margin-bottom:12px}
 .delivery-row{display:flex;justify-content:space-between;font-size:13px;padding:6px 0;border-bottom:1px solid var(--border)}
 .delivery-row:last-child{border-bottom:none}
+/* [CHROME-FORM:START] -- reused by contact.html's inquiry form, not just
+   the order form */
 .order-form{background:var(--white);border-radius:12px;padding:36px;box-shadow:var(--shadow)}
 .form-title{font-family:'Cormorant Garamond',serif;font-size:26px;margin-bottom:24px;font-weight:400}
 .form-group{margin-bottom:20px}
@@ -209,6 +221,7 @@ section{padding:80px 24px}
 .form-submit{width:100%;padding:16px;background:var(--olive);color:#fff;border:none;border-radius:var(--r);font-size:13px;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;transition:var(--trans);font-family:'DM Sans',sans-serif;font-weight:500;margin-top:8px}
 .form-submit:hover{background:var(--olive-l);transform:translateY(-1px)}
 .form-note{font-size:11px;color:var(--muted);text-align:center;margin-top:12px;line-height:1.6}
+/* [CHROME-FORM:END] */
 
 /* ── FOOD INFO (EU Reg 1169/2011) ── */
 .food-info{margin-top:12px;padding-top:12px;border-top:1px dashed var(--border)}
@@ -243,23 +256,37 @@ section{padding:80px 24px}
 .stat-num{font-family:'Cormorant Garamond',serif;font-size:36px;color:var(--olive);font-weight:600;line-height:1}
 .stat-label{font-size:11px;color:var(--muted);margin-top:4px;letter-spacing:.08em}
 
+/* [CHROME-FOOTER:START] */
 /* ── FOOTER ── */
 footer{background:var(--ink);color:rgba(255,255,255,.6);padding:48px 24px 24px}
 .footer-inner{max-width:1200px;margin:0 auto}
 .footer-top{display:grid;grid-template-columns:1fr 2fr;gap:48px;margin-bottom:40px}
 .footer-brand .logo-mark{color:rgba(255,255,255,.9)}
 .footer-brand p{font-size:13px;margin-top:12px;line-height:1.7;color:rgba(255,255,255,.45)}
+.footer-signature{margin-top:16px;padding-top:14px;border-top:1px solid rgba(255,255,255,.08);font-size:11.5px;line-height:1.9;color:rgba(255,255,255,.35)}
+.footer-signature p{margin:0;font-size:inherit;color:inherit}
+.footer-signature a{color:inherit;text-decoration:none}
+.footer-signature a:hover{color:rgba(255,255,255,.6)}
 .footer-links{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
 .footer-col h4{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.3);margin-bottom:16px}
 .footer-col a{display:block;font-size:13px;color:rgba(255,255,255,.55);text-decoration:none;margin-bottom:8px;transition:var(--trans)}
 .footer-col a:hover{color:#fff}
 .footer-bottom{display:flex;justify-content:space-between;align-items:center;padding-top:24px;border-top:1px solid rgba(255,255,255,.08);font-size:12px;flex-wrap:wrap;gap:12px}
+/* [CHROME-FOOTER:END] */
 
+/* [CHROME-TOAST:START] */
 /* ── TOAST ── */
 .toast{position:fixed;bottom:24px;right:24px;background:var(--olive);color:#fff;padding:14px 24px;border-radius:var(--r);font-size:14px;transform:translateY(80px);opacity:0;transition:var(--trans);z-index:999;box-shadow:var(--shadow-h)}
 .toast.show{transform:translateY(0);opacity:1}
+/* [CHROME-TOAST:END] */
 
 /* ── MOBILE ── */
+/* NOTE: nav/.hamburger/.footer-top/.footer-links/.form-row/.cart-drawer rules
+   below are hand-duplicated (not marker-extracted) into build.py's
+   LEGAL_PAGE_CSS mobile block, since this query also holds page-specific
+   rules (tracks-grid/contact-wrap/about-visual/section padding) that don't
+   belong on the legal/contact pages. If you change the chrome-relevant
+   rules here, update LEGAL_PAGE_CSS's mobile block in build.py to match. */
 @media(max-width:768px){
   nav{display:none}nav.open{display:flex;flex-direction:column;position:absolute;top:72px;left:0;right:0;background:var(--cream);padding:24px;border-bottom:1px solid var(--border);gap:20px}
   .hamburger{display:flex}
@@ -272,6 +299,7 @@ footer{background:var(--ink);color:rgba(255,255,255,.6);padding:48px 24px 24px}
   .cart-drawer{width:100%;max-width:100vw}
 }
 
+/* [CHROME-LANGVIS:START] */
 /* ── LANGUAGE VISIBILITY ── */
 [data-lang]{display:none}
 body.lt [data-lang="lt"]{display:block}
@@ -289,6 +317,7 @@ body.pl [data-lang="pl"].flex{display:flex}
 body.lt .t span[data-lang="lt"],
 body.en .t span[data-lang="en"],
 body.pl .t span[data-lang="pl"]{display:inline}
+/* [CHROME-LANGVIS:END] */
 
 /* ── SCROLL REVEAL ── */
 .reveal{opacity:0;transform:translateY(24px);transition:opacity .6s ease,transform .6s ease}
@@ -297,6 +326,11 @@ body.pl .t span[data-lang="pl"]{display:inline}
 </head>
 <body class="lt">
 
+<!-- [CHROME-HEADER-HTML:START] -- extracted verbatim by build.py for every
+     generated page. On other pages, #products/#contact hrefs inside this
+     block are rewritten to index.html#products/index.html#contact (see
+     build.py's rewrite_chrome_anchors()); a dedicated "Contact" nav item
+     pointing at contact.html is appended for those pages only. -->
 <!-- LANGUAGE BAR -->
 <div class="lang-bar">
   <a href="#" onclick="setLang('lt')" id="lang-lt" class="active">LT — Lietuvių</a>
@@ -327,6 +361,11 @@ body.pl .t span[data-lang="pl"]{display:inline}
         <span data-lang="en">About</span>
         <span data-lang="pl">O nas</span>
       </a>
+      <a href="contact.html" class="t">
+        <span data-lang="lt">Kontaktai</span>
+        <span data-lang="en">Contact</span>
+        <span data-lang="pl">Kontakt</span>
+      </a>
       <a href="#contact" class="nav-cta t">
         <span data-lang="lt">Užsakyti</span>
         <span data-lang="en">Order</span>
@@ -339,6 +378,7 @@ body.pl .t span[data-lang="pl"]{display:inline}
     <div class="hamburger" onclick="toggleMenu()"><span></span><span></span><span></span></div>
   </div>
 </header>
+<!-- [CHROME-HEADER-HTML:END] -->
 
 <!-- HERO -->
 <section class="hero">
@@ -541,14 +581,19 @@ body.pl .t span[data-lang="pl"]{display:inline}
 </section>
 
 <!-- FOOTER -->
+<!-- [CHROME-FOOTER-HTML:START] -- extracted verbatim by build.py, see the
+     CHROME-HEADER-HTML note above; same anchor-rewrite treatment applies. -->
 <footer>
   <div class="footer-inner">
     <div class="footer-top">
       <div class="footer-brand">
         <div class="logo-mark">ORIGO</div>
         <p class="t"><span data-lang="lt">Rinktiniai produktai iš Europos. Vilnius, Lietuva.</span><span data-lang="en">Selected products from Europe. Vilnius, Lithuania.</span><span data-lang="pl">Wybrane produkty z Europy. Wilno, Litwa.</span></p>
-        <p class="t" style="margin-top:8px;font-size:12px;color:rgba(255,255,255,.3)"><span data-lang="lt">Įm. kodas 304174019 · Anykščių r., Lietuva, LT-29240</span><span data-lang="en">Company code 304174019 · Anykščių r., Lithuania, LT-29240</span><span data-lang="pl">Kod firmy 304174019 · Anykščių r., Litwa, LT-29240</span></p>
-        <p style="margin-top:4px;font-size:12px;color:rgba(255,255,255,.3)">iieik.eu · <a href="mailto:info@iieik.eu" style="color:inherit">info@iieik.eu</a></p>
+        <div class="footer-signature">
+          <p>IĮ &quot;Eksportas, importas ir konsultacija&quot;</p>
+          <p class="t"><span data-lang="lt">Anykščių r., Lietuva, LT-29240 · Įm. kodas 304174019</span><span data-lang="en">Anykščių r., Lithuania, LT-29240 · Company code 304174019</span><span data-lang="pl">Anykščių r., Litwa, LT-29240 · Kod firmy 304174019</span></p>
+          <p>iieik.eu · <a href="mailto:info@iieik.eu">info@iieik.eu</a></p>
+        </div>
       </div>
       <div class="footer-links">
         <div class="footer-col">
@@ -561,6 +606,7 @@ body.pl .t span[data-lang="pl"]{display:inline}
         <div class="footer-col">
           <h4 class="t"><span data-lang="lt">Informacija</span><span data-lang="en">Information</span><span data-lang="pl">Informacje</span></h4>
           <a href="company.html" class="t"><span data-lang="lt">Apie mus</span><span data-lang="en">About us</span><span data-lang="pl">O nas</span></a>
+          <a href="contact.html" class="t"><span data-lang="lt">Kontaktai</span><span data-lang="en">Contact</span><span data-lang="pl">Kontakt</span></a>
           <a href="#contact" class="t"><span data-lang="lt">Pristatymas</span><span data-lang="en">Delivery</span><span data-lang="pl">Dostawa</span></a>
           <a href="returns.html" class="t"><span data-lang="lt">Grąžinimas</span><span data-lang="en">Returns</span><span data-lang="pl">Zwroty</span></a>
           <a href="terms.html" class="t"><span data-lang="lt">Pirkimo–pardavimo taisyklės</span><span data-lang="en">Terms &amp; Conditions</span><span data-lang="pl">Regulamin</span></a>
@@ -582,7 +628,9 @@ body.pl .t span[data-lang="pl"]{display:inline}
     </div>
   </div>
 </footer>
+<!-- [CHROME-FOOTER-HTML:END] -->
 
+<!-- [CHROME-CARTDRAWER-HTML:START] -->
 <!-- CART DRAWER -->
 <div class="cart-overlay" id="cart-overlay" onclick="closeBasket()"></div>
 <div class="cart-drawer" id="cart-drawer">
@@ -595,11 +643,19 @@ body.pl .t span[data-lang="pl"]{display:inline}
 </div>
 
 <div class="toast" id="toast"></div>
+<!-- [CHROME-CARTDRAWER-HTML:END] -->
 
 <script>
 // ── DATA ──────────────────────────────────────────────────────────────────
 const LANG = { lt:0, en:1, pl:2 };
 let currentLang = 'lt';
+
+// This same script is reused verbatim on every generated page (build.py's
+// extract_chrome_blocks()) -- the order form/checkout section only exists
+// on index.html itself, so the cart drawer's checkout link must point back
+// there (as an anchor) when rendered from any other page.
+const ON_INDEX_PAGE = /(^|\/)(index\.html)?$/.test(location.pathname);
+const CHECKOUT_ANCHOR = ON_INDEX_PAGE ? '#contact' : 'index.html#contact';
 
 // Product data is fetched from products.json (generated by build.py from
 // products.yaml -- the single source of truth) rather than hardcoded here.
@@ -726,6 +782,7 @@ function buildTrack2TermsPanel(p) {
 // ── RENDER PRODUCTS ───────────────────────────────────────────────────────
 function renderProducts() {
   const grid = document.getElementById('products-grid');
+  if (!grid) return; // no product grid on legal/contact pages -- chrome JS is shared, see CHROME-* markers above
 
   if (catalogOffline) {
     grid.innerHTML = `
@@ -881,8 +938,10 @@ function renderCheckout() {
 }
 
 function renderWhy() {
+  const grid = document.getElementById('why-grid');
+  if (!grid) return; // no why-grid on legal/contact pages -- chrome JS is shared, see CHROME-* markers above
   const L = LANG[currentLang];
-  document.getElementById('why-grid').innerHTML = whyItems.map(w => `
+  grid.innerHTML = whyItems.map(w => `
     <div class="why-item reveal">
       <div class="why-icon">${w.icon}</div>
       <h3 class="why-title">${w.title[L]}</h3>
@@ -892,9 +951,11 @@ function renderWhy() {
 }
 
 function renderMarquee() {
+  const el = document.getElementById('marquee-content');
+  if (!el) return; // no marquee on legal/contact pages -- chrome JS is shared, see CHROME-* markers above
   const items = ['EVOO · Extra Virgin Olive Oil','Specialty Coffee · Kava','Cast Iron · Ketaus Indai','Pink Salt · Himalajų Druska','TerraMaster NAS','Epson EcoTank','Cod Liver Oil · Menkių Aliejus'];
   const full = [...items,...items,...items,...items];
-  document.getElementById('marquee-content').innerHTML = full.map(i => `<span>${i}</span>`).join('');
+  el.innerHTML = full.map(i => `<span>${i}</span>`).join('');
 }
 
 // ── BASKET ────────────────────────────────────────────────────────────────
@@ -1012,7 +1073,7 @@ function renderCartDrawer() {
   const subtotal = items.reduce((s, i) => s + i.product.price_eur * i.qty, 0);
   footer.innerHTML = `
     <div class="cart-subtotal-row"><span>${B.subtotal}</span><span>€${subtotal.toFixed(2)}</span></div>
-    <a href="#contact" class="btn btn-primary cart-checkout-btn" onclick="closeBasket()">${B.checkout}</a>`;
+    <a href="${CHECKOUT_ANCHOR}" class="btn btn-primary cart-checkout-btn" onclick="closeBasket()">${B.checkout}</a>`;
 }
 
 function updateCartBadge() {
@@ -1126,6 +1187,55 @@ async function submitForm(e) {
     clearBasket();
   } catch (err) {
     console.error('Order submission failed:', err);
+    showToast(failMsgs);
+  }
+}
+
+// Contact page's inquiry form (contact.html, build.py's render_contact_page())
+// -- only ever invoked via onsubmit on #contact-form, which doesn't exist on
+// this page, so this is dead code here but shared verbatim like the rest of
+// this script (see CHECKOUT_ANCHOR note above).
+const CONTACT_ENDPOINT = 'https://orders.iieik.eu/webhook/origo-contact';
+
+async function submitContactForm(e) {
+  e.preventDefault();
+
+  const payload = {
+    token: document.getElementById('c-token').value,
+    honeypot: document.getElementById('c-company').value,
+    name: document.getElementById('c-name').value.trim(),
+    email: document.getElementById('c-email').value.trim(),
+    message: document.getElementById('c-message').value.trim(),
+    lang: currentLang,
+    // Server-side check too (never trust the client alone) -- same posture
+    // as the order form's terms_accepted field.
+    consent: document.getElementById('c-consent').checked,
+  };
+
+  const successMsgs = {
+    lt: 'Žinutė išsiųsta! Atsakysime per 24 val. ✓',
+    en: 'Message sent! We will respond within 24h. ✓',
+    pl: 'Wiadomość wysłana! Odpowiemy w ciągu 24h. ✓',
+  };
+  const failMsgs = {
+    lt: 'Nepavyko išsiųsti žinutės. Rašykite mums tiesiogiai: info@iieik.eu',
+    en: 'Could not send the message. Please email us directly: info@iieik.eu',
+    pl: 'Nie udało się wysłać wiadomości. Napisz do nas bezpośrednio: info@iieik.eu',
+  };
+
+  try {
+    const res = await fetch(CONTACT_ENDPOINT, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+    });
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const data = await res.json();
+    if (!data.ok) throw new Error('server rejected inquiry');
+    showToast(successMsgs);
+    e.target.reset();
+  } catch (err) {
+    console.error('Contact submission failed:', err);
     showToast(failMsgs);
   }
 }
