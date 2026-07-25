@@ -1,0 +1,41 @@
+#!/bin/bash
+# pre-push safety net — the documented flow is "edit products.yaml -> run
+# make build -> git push" (see docs/EDITING.md), but if a build was
+# forgotten this catches it before a stale products.json/feed.xml/
+# paste-pack ever reaches the live site.
+#
+# Enabled via: git config core.hooksPath .githooks (done once per clone —
+# see docs/EDITING.md).
+set -euo pipefail
+
+cd "$(git rev-parse --show-toplevel)"
+
+if [ ! -f products.yaml ]; then
+  exit 0
+fi
+
+python3 build.py > /tmp/origo-prepush-build.log 2>&1 || {
+  echo "pre-push: build.py failed — see /tmp/origo-prepush-build.log" >&2
+  exit 1
+}
+
+if ! git diff --quiet -- products.json feed.xml dispatch/paste-packs/; then
+  echo "pre-push: BLOCKED — products.yaml changed but the generated files"     >&2
+  echo "(products.json / feed.xml / dispatch/paste-packs/) are out of date."   >&2
+  echo "Run: make build && git add -A && git commit -m 'rebuild catalog'"      >&2
+  echo "then push again."                                                     >&2
+  exit 1
+fi
+
+# Info-duty pre-golive check (PATCH v3, 2026-07-22, Segment 12): simulates
+# an order and confirms every mandatory pre-contract information element
+# actually renders (confirmation email + generated legal pages) before
+# this push reaches the live site — see docs/RUNBOOK.md -> "Info-duty
+# pre-golive check" and futura-genesis/scripts/origo-precheck-legal-info.py
+# for exactly what this does and doesn't check.
+python3 ~/futura-genesis/scripts/origo-precheck-legal-info.py --site-dir "$(pwd)" || {
+  echo "pre-push: BLOCKED by origo-precheck-legal-info.py — see output above." >&2
+  exit 1
+}
+
+exit 0
